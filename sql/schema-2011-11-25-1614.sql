@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `nvc_sessions`
 --
 
-DROP TABLE IF EXISTS `nvc_sessions`;
-CREATE TABLE IF NOT EXISTS `nvc_sessions` (
+DROP TABLE IF EXISTS `ci_sessions`;
+CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) NOT NULL,
