@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uuid` varchar(36) NOT NULL DEFAULT '0',
   `username` varchar(25) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `uuid`, `username`, `password`, `first_name`, `last_name`, `email`) VALUES
+INSERT INTO `users` (`id`, `uuid`, `username`, `password`, `first_name`, `last_name`, `email`) VALUES
 (26, 0, 'normaldude', '7a0dd4cfae78b0386988d01fe6cb5db524adec83', 'John', 'Doe', 'normaldude@normaldude.com'),
 (27, 0, 'admindude', '581000ca062386cc95a00ae66e3203ec409631e5', 'Tom', 'Sawyer', 'admindude@admindude.com');
 
