@@ -1,6 +1,15 @@
 <?php
 
-class User extends CI_Model {
+class User_model extends Crud {
+
+    public function __construct($data = array()) {
+        parent::__construct();
+
+        $this->table = 'users';
+        foreach ($data as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
 
 	function verify_and_get_user($username, $password) {
 		$this->db->select('id, uuid, username, first_name, last_name');
