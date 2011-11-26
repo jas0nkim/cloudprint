@@ -3,7 +3,7 @@
 class User extends CI_Model {
 
 	function verify_and_get_user($username, $password) {
-		$this->db->select('user_id, username, first_name, last_name, user_level');
+		$this->db->select('id, uuid, username, first_name, last_name');
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
 
@@ -79,7 +79,7 @@ class User extends CI_Model {
 
 	//get users
 	function get_user() {
-		$this->db->select('user_id, username');
+		$this->db->select('id, username');
 
 		$query = $this->db->get('user');
 
@@ -96,7 +96,7 @@ class User extends CI_Model {
 
 	//get user
 	function get_user_by_username($username) {
-		$this->db->select('user_id, username, first_name, last_name, user_level');
+		$this->db->select('id, username, first_name, last_name');
 		$this->db->where('username', $username);
 		$this->db->limit(1);
 
@@ -115,8 +115,8 @@ class User extends CI_Model {
 	}
 
 	function verify_password($user_id, $password) {
-		$this->db->select('user_id', 'password');
-		$this->db->where('user_id', $user_id);
+		$this->db->select('id', 'password');
+		$this->db->where('id', $user_id);
 		$this->db->where('password', $password);
 
 		$query = $this->db->get('user');
@@ -130,7 +130,7 @@ class User extends CI_Model {
 
 
 	function update_user($user_id, $item) {
-		$this->db->where('user_id', $user_id);
+		$this->db->where('id', $user_id);
 		$query = $this->db->update('user', $item);
 
 		if ($query == TRUE) {
@@ -145,7 +145,7 @@ class User extends CI_Model {
 	}
 
 	function delete_user($user_id) {
-		$this->db->where('user_id', $user_id);
+		$this->db->where('id', $user_id);
 		$query = $this->db->delete('user');
 
 		if ($query) {
@@ -178,7 +178,7 @@ class User extends CI_Model {
 	}
 
 	function verify_recover_password($username, $email) {
-		$this->db->select('user_id');
+		$this->db->select('id');
 		$this->db->where('username', $username);
 		$this->db->where('email', $email);
 
