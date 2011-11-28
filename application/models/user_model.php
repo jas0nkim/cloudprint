@@ -16,7 +16,7 @@ class User_model extends Crud {
 		$this->db->where('username', $username);
 		$this->db->where('password', $password);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() == 1) {
 			//use reference code and dev message for logging/error handling here if needed
@@ -63,7 +63,7 @@ class User_model extends Crud {
 		$this->db->select('email');
 		$this->db->where('email', $email);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() > 0) {
 			return TRUE;
@@ -73,7 +73,7 @@ class User_model extends Crud {
 	}
 
 	function create_user($new_user_array) {
-		$query = $this->db->insert('user', $new_user_array);
+		$query = $this->db->insert($this->table, $new_user_array);
 
 		if ($query == TRUE) {
 			$data['is_true'] = TRUE;
@@ -90,7 +90,7 @@ class User_model extends Crud {
 	function get_user() {
 		$this->db->select('id, username');
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() > 0) {
 			$data['is_true'] = TRUE;
@@ -109,7 +109,7 @@ class User_model extends Crud {
 		$this->db->where('username', $username);
 		$this->db->limit(1);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query == TRUE) {
 			$data['is_true'] = TRUE;
@@ -128,7 +128,7 @@ class User_model extends Crud {
 		$this->db->where('id', $user_id);
 		$this->db->where('password', $password);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() > 0) {
 			return TRUE;
@@ -140,7 +140,7 @@ class User_model extends Crud {
 
 	function update_user($user_id, $item) {
 		$this->db->where('id', $user_id);
-		$query = $this->db->update('user', $item);
+		$query = $this->db->update($this->table, $item);
 
 		if ($query == TRUE) {
 			$data['is_true'] = TRUE;
@@ -155,7 +155,7 @@ class User_model extends Crud {
 
 	function delete_user($user_id) {
 		$this->db->where('id', $user_id);
-		$query = $this->db->delete('user');
+		$query = $this->db->delete($this->table);
 
 		if ($query) {
 			$data['is_true'] = TRUE;
@@ -172,7 +172,7 @@ class User_model extends Crud {
 		$this->db->select('username');
 		$this->db->where('email', $email);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() > 0) {
 			$data['message'] = 'Successfully retrieved email!';
@@ -191,7 +191,7 @@ class User_model extends Crud {
 		$this->db->where('username', $username);
 		$this->db->where('email', $email);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() == 1) {
 			$data['query_result'] = $query->result();
