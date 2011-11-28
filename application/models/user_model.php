@@ -50,7 +50,7 @@ class User_model extends Crud {
 		$this->db->select('username');
 		$this->db->where('username', $username);
 
-		$query = $this->db->get('user');
+		$query = $this->db->get($this->table);
 
 		if ($query->num_rows() > 0) {
 			return TRUE;
