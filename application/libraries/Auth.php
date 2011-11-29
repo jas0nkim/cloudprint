@@ -20,9 +20,9 @@ class Auth {
 
 	function login($username, $password) {
 
-		$this->CI->load->model('user');
+		$this->CI->load->model('user_model');
 
-		$result = $this->CI->user->verify_and_get_user($username, $password);
+		$result = $this->CI->user_model->verify_and_get_user($username, $password);
 
 
 
@@ -130,9 +130,9 @@ class Auth {
 
 
 
-			$this->CI->load->model('user');
+			$this->CI->load->model('user_model');
 
-			$result = $this->CI->user->create_user($new_user_array);
+			$result = $this->CI->user_model->create_user($new_user_array);
 
 
 
@@ -186,9 +186,9 @@ class Auth {
 
 	function update_user($page) {
 
-		$this->CI->load->model('user');
+		$this->CI->load->model('user_model');
 
-		$result_get_users = $this->CI->user->get_user();
+		$result_get_users = $this->CI->user_model->get_user();
 
 
 
@@ -282,7 +282,7 @@ class Auth {
 
 				$updated_user = array('username' => $username);
 
-				$result_update = $this->CI->user->update_user($user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($user_id, $updated_user);
 
 				if ($page == 'secure') :
 
@@ -302,7 +302,7 @@ class Auth {
 
 				$updated_user = array('email' => $email);
 
-				$result_update = $this->CI->user->update_user($user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($user_id, $updated_user);
 
 			endif;
 
@@ -314,7 +314,7 @@ class Auth {
 
 				$updated_user = array('password' => $password);
 
-				$result_update = $this->CI->user->update_user($user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($user_id, $updated_user);
 
 			endif;
 
@@ -324,7 +324,7 @@ class Auth {
 
 				$updated_user = array('first_name' => $first_name);
 
-				$result_update = $this->CI->user->update_user($user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($user_id, $updated_user);
 
 				if ($page == 'secure') :
 
@@ -344,7 +344,7 @@ class Auth {
 
 				$updated_user = array('last_name' => $last_name);
 
-				$result_update = $this->CI->user->update_user($user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($user_id, $updated_user);
 
 				if ($page == 'secure') :
 
@@ -446,9 +446,9 @@ class Auth {
 
 	function change_roles() {
 
-		$this->CI->load->model('user');
+		$this->CI->load->model('user_model');
 
-		$result_get_users = $this->CI->user->get_user();
+		$result_get_users = $this->CI->user_model->get_user();
 
 
 
@@ -494,7 +494,7 @@ class Auth {
 
 			$updated_user = array('user_level' => $user_level);
 
-			$result_update = $this->CI->user->update_user($this->CI->input->post('user_id'), $updated_user);
+			$result_update = $this->CI->user_model->update_user($this->CI->input->post('user_id'), $updated_user);
 
 
 
@@ -532,9 +532,9 @@ class Auth {
 
 		if ($page == 'admin') :
 
-			$this->CI->load->model('user');
+			$this->CI->load->model('user_model');
 
-			$result_get_users = $this->CI->user->get_user();
+			$result_get_users = $this->CI->user_model->get_user();
 
 			$this->CI->form_validation->set_rules('user_id', 'User', 'required|xss_clean');
 
@@ -598,7 +598,7 @@ class Auth {
 
 
 
-			$result_delete = $this->CI->user->delete_user($user_id);
+			$result_delete = $this->CI->user_model->delete_user($user_id);
 
 
 
@@ -676,9 +676,9 @@ class Auth {
 
 		} else {
 
-			$this->CI->load->model('user');
+			$this->CI->load->model('user_model');
 
-			$result = $this->CI->user->get_username($this->CI->input->post('email'));
+			$result = $this->CI->user_model->get_username($this->CI->input->post('email'));
 
 
 
@@ -766,9 +766,9 @@ class Auth {
 
 
 
-			$this->CI->load->model('user');
+			$this->CI->load->model('user_model');
 
-			$result_verify = $this->CI->user->verify_recover_password($username, $email);
+			$result_verify = $this->CI->user_model->verify_recover_password($username, $email);
 
 
 
@@ -788,7 +788,7 @@ class Auth {
 
 
 
-				$result_update = $this->CI->user->update_user($qr->user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($qr->user_id, $updated_user);
 
 				if ($result_update['is_true'] == TRUE) {
 
