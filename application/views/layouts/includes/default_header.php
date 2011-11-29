@@ -35,10 +35,6 @@
 <body>
 <div id="container">
     <div id="header">
-        <!-- delete this -->
-        <div id="logo">
-            <a href="/">Home</a></div>
-        <!-- /end delete this -->
         <ul id="nav">
             <li><a href="/" title="Home is where you make it.">Home</a></li>
             <li><a href="http://lostandcloud.com/envysea/about">About</a></li>
