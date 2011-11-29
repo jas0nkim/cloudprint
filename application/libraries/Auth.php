@@ -42,8 +42,6 @@ class Auth {
 
 							'last_name' => $qr->last_name,
 
-							'user_level' => $qr->user_level,
-
 							'is_logged_in' => TRUE
 
 							);
@@ -55,8 +53,6 @@ class Auth {
 			$data['message'] = $result['message'];
 
 			$data['is_true'] = $result['is_true'];
-
-			$data['is_admin'] = ($qr->user_level == $this->CI->config->item('admin_level') ? TRUE : FALSE);
 
 			return $data;
 
