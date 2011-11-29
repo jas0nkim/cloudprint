@@ -852,19 +852,26 @@ class Auth {
 
 
 
-	function is_logged_in() {
+	public function is_logged_in() {
 
 		$is_logged_in = $this->CI->session->userdata('is_logged_in');
 
 		if (!isset($is_logged_in) || $is_logged_in != TRUE ) {
-
-			$this->CI->session->set_flashdata('message', '<div class="error_message">Try logging in first.</div>');
-
-			redirect('members/login', 'location');
-
-		}
+            return FALSE;
+		} else {
+            return TRUE;
+        }
 
 	}
+
+
+    public function is_logged_in_redirect() {
+        if (!$this->is_logged_in()) {
+            $this->CI->session->set_flashdata('message', '<div class="error_message">Try logging in first.</div>');
+
+            redirect('members/login', 'location');
+        }
+    }
 
 
 
@@ -887,14 +894,10 @@ class Auth {
 	}
 
 
-
 	function logout() {
-
 		$this->CI->session->sess_destroy();
-
+        $this->CI->session->unset_userdata('is_logged_in');
 	}
-
-
 
 }
 

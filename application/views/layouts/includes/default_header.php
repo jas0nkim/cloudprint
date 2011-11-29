@@ -44,5 +44,8 @@
             <li><a href="http://lostandcloud.com/envysea/about">About</a></li>
             <li><a href="/members/login">Members</a></li>
             <li><a href="http://lostandcloud.com/envysea/contact">Contact</a></li>
+            <?php if ($this->auth->is_logged_in()): ?>
+                <li><a href="/members/logout">Logout</a></li>
+            <?php endif; ?>
         </ul>
     </div>

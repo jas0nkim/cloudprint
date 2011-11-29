@@ -5,10 +5,18 @@
     <?php echo $this->session->flashdata('message'); ?>
     <?php if (!empty($message)) { echo $message; } ?>
 
+    <?php if (!isset($controller)): ?>
+        <?php $controller = $this->router->fetch_class(); ?>
+    <?php endif; ?>
+
+    <?php if (!isset($action)): ?>
+        <?php $action = $this->router->fetch_method(); ?>
+    <?php endif; ?>
+
     <?php if (isset($content_data)): ?>
-        <?php $this->load->view($this->router->fetch_class().'/'.$this->router->fetch_method(), $content_data); ?>
+        <?php $this->load->view($controller.'/'.$action, $content_data); ?>
     <?php else: ?>
-        <?php $this->load->view($this->router->fetch_class().'/'.$this->router->fetch_method()); ?>
+        <?php $this->load->view($controller.'/'.$action); ?>
     <?php endif; ?>
 
 </div>

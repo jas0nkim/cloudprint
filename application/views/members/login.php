@@ -1,4 +1,3 @@
-<?php echo $debug_message_1; ?>
 <?php echo heading('Login', 1, 'class="page_header"'); ?>
 
 <?php $login_form = array('class' => 'form'); ?>
