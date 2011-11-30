@@ -74,6 +74,17 @@ if (defined('ENVIRONMENT'))
  */
 	$application_folder = '/home/dev/www/application';
 
+
+/*
+ *---------------------------------------------------------------
+ * WEB ROOT FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * NO TRAILING SLASH!
+ *
+ */
+	$web_root_folder = '/home/dev/www/webroot';
+
 /*
  * --------------------------------------------------------------------
  * DEFAULT CONTROLLER
@@ -189,6 +200,22 @@ if (defined('ENVIRONMENT'))
 		}
 
 		define('APPPATH', BASEPATH.$application_folder.'/');
+	}
+
+
+	// The path to the "web root" folder
+	if (is_dir($web_root_folder))
+	{
+		define('WEBROOTPATH', $web_root_folder.'/');
+	}
+	else
+	{
+		if ( ! is_dir(BASEPATH.$web_root_folder.'/'))
+		{
+			exit("Your web root folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
+
+		define('APPPATH', BASEPATH.$web_root_folder.'/');
 	}
 
 /* End of file settings.php */

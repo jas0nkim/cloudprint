@@ -6,13 +6,13 @@
 
 		<li>
 
-			<?php echo anchor('secure/page1',
+			<?php echo anchor('members/upload',
 
 				'<div class="nvc_item">
 
-					<h2 class="nvc_link">Secure sample page one</h2>
+					<h2 class="nvc_link">Upload</h2>
 
-					<h3 class="nvc_tagline">Secure and simple example</h3>
+					<h3 class="nvc_tagline">Upload your files</h3>
 
 				</div>'); ?>
 

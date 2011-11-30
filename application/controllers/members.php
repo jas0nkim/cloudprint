@@ -110,12 +110,49 @@ class Members extends CI_Controller {
 
             } else {
                 $data['message'] = '<div class="error_message">'.$result['message'].'</div>';
-                $data['title'] = 'Create User | Envysea Codeigniter Authentication';
+                $data['title'] = 'Create User | Codeigniter Authentication';
 
                 $this->load->view('layouts/default', $data);
             }
-
         }
+    }
+
+    
+    /**
+     *
+     * @return void
+     */
+    public function upload() {
+        $data['title'] = 'Upload your files | Codeigniter Authentication';
+
+        $this->load->view('layouts/default', $data);
+    }
+
+
+    /**
+     *
+     * @return void
+     */
+    public function do_upload() {
+        $this->load->library('upload', $this->config->config['upload']);
+
+        print_r($_FILES);
+        die();
+        
+
+        if (!$this->upload->do_upload())
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            //$this->load->view('upload_form', $error);
+        }
+        else
+        {
+            $data = array('upload_data' => $this->upload->data());
+
+            //$this->load->view('upload_success', $data);
+        }
+
     }
 
 }
