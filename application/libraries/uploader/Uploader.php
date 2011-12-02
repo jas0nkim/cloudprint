@@ -6,6 +6,9 @@
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'AsyncUpload.php';
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'SyncUpload.php';
 
+// PHP AWS SDK
+include_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'third_party' . DIRECTORY_SEPARATOR . 'aws' . DIRECTORY_SEPARATOR . 'sdk.class.php';
+
 /*%******************************************************************************************%*/
 
 class Uploader {
@@ -22,13 +25,30 @@ class Uploader {
         }
     }
 
-    function upload_file($remotePath='',$allowext='all',$add='') {
+    /**
+     * upload files within local server
+     *
+     * @param string $remotePath
+     * @param string $allowext
+     * @param string $add
+     * @return bool|string
+     */
+    function upload_file_local($remotePath='',$allowext='all',$add='') {
 		$remotePath.=(substr($remotePath, -1)!='/')?'/':'';
         
 		if(!file_exists($remotePath)) mkdir($remotePath,0777,true);
 
         $msg = $this->file->save($remotePath,$allowext,$add);
         return $msg;
+    }
+
+    /**
+     * upload files to aws-s3 server
+     *
+     * @return void
+     */
+    function upload_file_s3() {
+        
     }
 
 }

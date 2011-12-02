@@ -148,7 +148,7 @@ class Members extends CI_Controller {
         $absolute_path = WEBROOTPATH . ((substr($_GET['ax-file-path'],0,1)=='/')?substr($_GET['ax-file-path'],1):$_GET['ax-file-path']);
         $ext = $_GET['ax-allow-ext'];
 
-        $res = $this->uploader->upload_file($absolute_path, $ext);
+        $res = $this->uploader->upload_file_local($absolute_path, $ext);
         echo $res;
     }
 
