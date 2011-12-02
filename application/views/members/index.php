@@ -6,13 +6,13 @@
 
 		<li>
 
-			<?php echo anchor('members/upload',
+			<?php echo anchor('members/free_print',
 
 				'<div class="nvc_item">
 
-					<h2 class="nvc_link">Upload</h2>
+					<h2 class="nvc_link">Print Now</h2>
 
-					<h3 class="nvc_tagline">Upload your files</h3>
+					<h3 class="nvc_tagline">Print your documents now</h3>
 
 				</div>'); ?>
 

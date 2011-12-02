@@ -117,42 +117,39 @@ class Members extends CI_Controller {
         }
     }
 
+
     
     /**
      *
      * @return void
      */
-    public function upload() {
-        $data['title'] = 'Upload your files | Codeigniter Authentication';
+    public function free_print() {
+        $data['title'] = 'Print your documents now | Codeigniter Authentication';
 
         $this->load->view('layouts/default', $data);
     }
 
 
+    public function print_now() {
+
+    }
+
+    public function print_later() {
+        
+    }
+
     /**
      *
      * @return void
      */
-    public function do_upload() {
-        $this->load->library('upload', $this->config->config['upload']);
+    public function upload() {
+        $this->load->library('uploader/uploader');
 
-        print_r($_FILES);
-        die();
-        
+        $absolute_path = WEBROOTPATH . ((substr($_GET['ax-file-path'],0,1)=='/')?substr($_GET['ax-file-path'],1):$_GET['ax-file-path']);
+        $ext = $_GET['ax-allow-ext'];
 
-        if (!$this->upload->do_upload())
-        {
-            $error = array('error' => $this->upload->display_errors());
-
-            //$this->load->view('upload_form', $error);
-        }
-        else
-        {
-            $data = array('upload_data' => $this->upload->data());
-
-            //$this->load->view('upload_success', $data);
-        }
-
+        $res = $this->uploader->upload_file($absolute_path, $ext);
+        echo $res;
     }
 
 }
