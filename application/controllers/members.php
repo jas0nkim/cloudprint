@@ -145,6 +145,33 @@ class Members extends CI_Controller {
     public function upload() {
         $this->load->library('uploader/uploader');
 
+
+        print_r($_GET);
+        print_r(pathinfo($_GET['ax-file-name']));
+        //$file = file_get_contents('php://input');
+
+        print_r(filesize('php://input'));
+        //print_r($_POST);
+        //print_r($_FILES);
+        die();
+
+        
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        if (!$finfo) {
+            echo "Opening fileinfo database failed";
+            die();
+        }
+
+        $file = file_get_contents('php://input');
+
+        echo $finfo->buffer($file); // return mine type
+
+        echo "\n\n";
+        
+        die();
+        
+
+
         $absolute_path = WEBROOTPATH . ((substr($_GET['ax-file-path'],0,1)=='/')?substr($_GET['ax-file-path'],1):$_GET['ax-file-path']);
         $ext = $_GET['ax-allow-ext'];
 

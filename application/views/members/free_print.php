@@ -5,7 +5,7 @@
 
 <div id="home_view">
 
-    <?php $upload_form = array('class' => 'form', 'enctype' => 'multipart/form-data'); ?>
+    <?php $upload_form = array('class' => 'form'); ?>
     <?php echo form_open('members/print_now', $upload_form); ?>
 
     <?php echo form_label('Select files:', 'uploads'); ?><br />
