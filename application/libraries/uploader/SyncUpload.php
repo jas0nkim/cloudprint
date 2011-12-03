@@ -1,7 +1,7 @@
 <?php
 
-class SyncUpload
-{
+class SyncUpload extends AxUpload {
+
     function save($remotePath,$allowext,$add)
 	{
 		$msg=true;

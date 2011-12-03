@@ -1,8 +1,11 @@
 <?php
 
 /*%******************************************************************************************%*/
-// CORE DEPENDENCIES
+// Configurations
+include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php';
 
+// CORE DEPENDENCIES
+include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'AxUpload.php';
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'AsyncUpload.php';
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'SyncUpload.php';
 
@@ -15,11 +18,11 @@ class Uploader {
 
 	private $file = false;
     
-    function __construct($remotePath='',$allowext='') {
+    function __construct($remote_path='') {
 		if (isset($_FILES['ax-files'])) {
-            $this->file = new SyncUpload();
-        } elseif(isset($_GET['ax-file-name'])) {
-            $this->file = new AsyncUpload();
+            $this->file = new SyncUpload($remote_path);
+        } elseif (isset($_GET['ax-file-name'])) {
+            $this->file = new AsyncUpload($remote_path);
         } else {
             $this->file = false;
         }
@@ -38,7 +41,7 @@ class Uploader {
         
 		if(!file_exists($remotePath)) mkdir($remotePath,0777,true);
 
-        $msg = $this->file->save($remotePath,$allowext,$add);
+        $msg = $this->file->save($remotePath, $allowext, $add);
         return $msg;
     }
 
@@ -47,7 +50,8 @@ class Uploader {
      *
      * @return void
      */
-    function upload_file_s3() {
+    function upload_file_s3($aws_key, $aws_secret_key) {
+        $s3 = new AmazonS3($aws_key, $aws_secret_key);
         
     }
 
