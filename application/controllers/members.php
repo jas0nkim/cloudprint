@@ -138,11 +138,15 @@ class Members extends CI_Controller {
         
     }
 
+    public function upload() {
+        echo json_encode(array('success' => TRUE));
+    }
+
     /**
      *
      * @return void
      */
-    public function upload() {
+    public function upload_old() {
         $this->load->library('uploader/uploader');
 
 
