@@ -138,49 +138,50 @@ class Members extends CI_Controller {
         
     }
 
-    public function upload() {
-        echo json_encode(array('success' => TRUE));
-    }
-
     /**
      *
      * @return void
      */
-    public function upload_old() {
-        $this->load->library('uploader/uploader');
+    public function upload() {
+        $this->load->library('uploader');
 
-
-        print_r($_GET);
-        print_r(pathinfo($_GET['ax-file-name']));
-        //$file = file_get_contents('php://input');
-
-        print_r(filesize('php://input'));
-        //print_r($_POST);
-        //print_r($_FILES);
-        die();
-
-        
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        if (!$finfo) {
-            echo "Opening fileinfo database failed";
-            die();
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'OPTIONS':
+                break;
+            case 'HEAD':
+            case 'GET':
+                $this->uploader->get();
+                break;
+            case 'POST':
+                $this->uploader->post();
+                break;
+            case 'DELETE':
+                $this->uploader->delete();
+                break;
+            default:
+                echo json_encode(array('success' => FALSE));
         }
-
-        $file = file_get_contents('php://input');
-
-        echo $finfo->buffer($file); // return mine type
-
-        echo "\n\n";
-        
-        die();
-        
-
-
-        $absolute_path = WEBROOTPATH . ((substr($_GET['ax-file-path'],0,1)=='/')?substr($_GET['ax-file-path'],1):$_GET['ax-file-path']);
-        $ext = $_GET['ax-allow-ext'];
-
-        $res = $this->uploader->upload_file_local($absolute_path, $ext);
-        echo $res;
     }
 
+    /**
+     * 
+     * @return void
+     */
+    public function file_delete() {
+        $this->load->library('uploader');
+        
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'DELETE':
+
+                echo "request_file: ".$_REQUEST['file']."/n/n";
+
+                $this->uploader->delete();
+                break;
+            default:
+                echo json_encode(array('success' => FALSE));
+        }
+    }
+    
 }
+
+/* End of file members.php */

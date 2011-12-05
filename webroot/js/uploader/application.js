@@ -28,18 +28,18 @@ $(function () {
             maxFileSize: 5000000,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
         });
-    } else {
-        // Load existing files:
-        $.getJSON($('#fileupload form').prop('action'), function (files) {
-            var fu = $('#fileupload').data('fileupload');
-            fu._adjustMaxNumberOfFiles(-files.length);
-            fu._renderDownload(files)
-                .appendTo($('#fileupload .files'))
-                .fadeIn(function () {
-                    // Fix for IE7 and lower:
-                    $(this).show();
-                });
-        });
+//    } else {
+//        // Load existing files:
+//        $.getJSON($('#fileupload form').prop('action'), function (files) {
+//            var fu = $('#fileupload').data('fileupload');
+//            fu._adjustMaxNumberOfFiles(-files.length);
+//            fu._renderDownload(files)
+//                .appendTo($('#fileupload .files'))
+//                .fadeIn(function () {
+//                    // Fix for IE7 and lower:
+//                    $(this).show();
+//                });
+//        });
     }
 
     // Enable iframe cross-domain access via redirect page:
