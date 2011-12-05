@@ -2,7 +2,7 @@
 
 class Uploader {
     
-    private $options;
+    protected $options;
     
     function __construct($options=null) {
         $this->options = array(
@@ -53,7 +53,7 @@ class Uploader {
 			substr($_SERVER['SCRIPT_NAME'],0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
 	}
     
-    private function get_file_object($file_name) {
+    protected function get_file_object($file_name) {
         $file_path = $this->options['upload_dir'].$file_name;
         if (is_file($file_path) && $file_name[0] !== '.') {
             $file = new stdClass();
@@ -73,14 +73,14 @@ class Uploader {
         return null;
     }
     
-    private function get_file_objects() {
+    protected function get_file_objects() {
         return array_values(array_filter(array_map(
             array($this, 'get_file_object'),
             scandir($this->options['upload_dir'])
         )));
     }
 
-    private function create_scaled_image($file_name, $options) {
+    protected function create_scaled_image($file_name, $options) {
         $file_path = $this->options['upload_dir'].$file_name;
         $new_file_path = $options['upload_dir'].$file_name;
         list($img_width, $img_height) = @getimagesize($file_path);
@@ -133,7 +133,7 @@ class Uploader {
         return $success;
     }
     
-    private function has_error($uploaded_file, $file, $error) {
+    protected function has_error($uploaded_file, $file, $error) {
         if ($error) {
             return $error;
         }
@@ -163,7 +163,7 @@ class Uploader {
         return $error;
     }
     
-    private function trim_file_name($name, $type) {
+    protected function trim_file_name($name, $type) {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
         // Also remove control characters and spaces (\x00..\x20) around the filename:
@@ -176,7 +176,7 @@ class Uploader {
         return $file_name;
     }
     
-    private function handle_file_upload($uploaded_file, $name, $size, $type, $error) {
+    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error) {
         $file = new stdClass();
         $file->name = $this->trim_file_name($name, $type);
         $file->size = intval($size);
@@ -220,7 +220,7 @@ class Uploader {
                 $file->error = 'abort';
             }
             $file->size = $file_size;
-            $file->delete_url = $this->options['delete_url'].'?file='.rawurlencode($file->name);;
+            $file->delete_url = $this->options['delete_url'].'?file='.rawurlencode($file->name);
             $file->delete_type = 'DELETE';
         } else {
             $file->error = $error;
@@ -296,14 +296,7 @@ class Uploader {
         $file_name = isset($_REQUEST['file']) ?
             basename(stripslashes($_REQUEST['file'])) : null;
         $file_path = $this->options['upload_dir'].$file_name;
-
-        echo $file_name."\n\n";
-        echo $file_path."\n\n";
-
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
-
-        echo $success."\n\n";
-
         if ($success) {
             foreach($this->options['image_versions'] as $version => $options) {
                 $file = $options['upload_dir'].$file_name;

@@ -143,7 +143,12 @@ class Members extends CI_Controller {
      * @return void
      */
     public function upload() {
-        $this->load->library('uploader');
+        $options = array(
+            'aws_s3_key' => $this->config['awss3']['key'],
+            'aws_s3_secret' => $this->config['awss3']['secret'],
+            'aws_s3_bucket' => $this->config['awss3']['bucket']
+        );
+        $this->load->library('s3uploader', $options);
 
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'OPTIONS':

@@ -4,6 +4,10 @@
 
 $config['salty_salt'] = 'envysea_top_secret_salt';
 
+// AWS S3
+$config['awss3']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
+$config['awss3']['secret'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
+$config['awss3']['bucket'] = 'fpdev';
 
 // moved to libraries/uploader/config.php
 
@@ -14,17 +18,24 @@ $config['salty_salt'] = 'envysea_top_secret_salt';
 //$config['upload']['max_width']  = '1024';
 //$config['upload']['max_height']  = '768';
 
+// allowed mime types in regular expression
+$config['upload']['accept_file_types'] = '/.+$/i';
+
+
+
+
 // allowed extension/mime-type pair
-//$config['upload']['allowed_types'] = array(
-//    'gif' => 'image/gif',
-//    'bmp' => 'image/bmp',
-//    'jpeg' => 'image/jpeg',
-//    'jpg' => 'image/jpeg',
-//    'png' => 'image/png',
-//    'doc' => 'application/msword',
-//    'pdf' => 'application/pdf',
-//   'txt' => 'text/plain'
-//);
+$config['upload']['allowed_types'] = array(
+    'gif' => 'image/gif',
+    'bmp' => 'image/bmp',
+    'jpeg' => 'image/jpeg',
+    'jpg' => 'image/jpeg',
+    'png' => 'image/png',
+    'doc' => 'application/msword',
+    'pdf' => 'application/pdf',
+    'txt' => 'text/plain'
+);
+
 
 
 
@@ -50,7 +61,5 @@ $config['salty_salt'] = 'envysea_top_secret_salt';
 
 // moved to third_party/aws/config.inc.php
 
-//$config['aws']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
-//$config['aws']['secret_key'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
 
 
