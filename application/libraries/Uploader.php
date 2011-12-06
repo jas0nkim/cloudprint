@@ -66,7 +66,7 @@ class Uploader {
                         .rawurlencode($file->name);
                 }
             }
-            $file->delete_url = $this->options['delete_url'].'?file='.rawurlencode($file->name);;
+            $file->delete_url = $this->options['delete_url'].'?file='.rawurlencode($file->name);
             $file->delete_type = 'DELETE';
             return $file;
         }
