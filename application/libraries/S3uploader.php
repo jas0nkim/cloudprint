@@ -7,11 +7,13 @@ include_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'third_party' . 
 
 class S3uploader extends Uploader {
 
+    protected $s3;
+
     function __construct($options=null) {
         $this->options = array(
             'aws_s3_key' => '',
-            'aws_s3_' => '',
-            'aws_s3_key' => '',
+            'aws_s3_secret' => '',
+            'aws_s3_bucket' => '',
             'delete_url' => '',
             'upload_dir' => dirname(__FILE__).'/uploads/',
             'upload_url' => $this->getFullUrl().'/uploads/',
@@ -28,6 +30,12 @@ class S3uploader extends Uploader {
         );
         if ($options) {
             $this->options = array_replace_recursive($this->options, $options);
+        }
+
+        try {
+            $this->s3 = new AmazonS3($this->options['aws_s3_key'], $this->options['aws_s3_secret']);
+        } catch (S3_Exception $e) {
+            echo "Error: " . $e;
         }
     }
 
