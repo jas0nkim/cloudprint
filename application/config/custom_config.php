@@ -7,15 +7,31 @@ $config['salty_salt'] = 'envysea_top_secret_salt';
 
 // DB model status
 // users
-$config['user_status']['inactive'] = 0;
+$config['user_status']['temp'] = 0;
 $config['user_status']['active'] = 1;
-$config['user_status']['blocked'] = 2;
+$config['user_status']['inactive'] = 2;
 $config['user_status']['deleted'] = 3;
+$config['user_status']['blocked'] = 4;
 
 // assets
-$config['asset_status']['local'] = 1;
-$config['asset_status']['s3'] = 2;
+$config['asset_status']['temp'] = 0;
+$config['asset_status']['active'] = 1;
+$config['asset_status']['inactive'] = 2;
 $config['asset_status']['deleted'] = 3;
+$config['asset_status']['local'] = 4;
+
+
+// allowed extension/mime-type pair
+$config['upload']['allowed_types'] = array(
+    'gif' => 'image/gif',
+    'bmp' => 'image/bmp',
+    'jpeg' => 'image/jpeg',
+    'jpg' => 'image/jpeg',
+    'png' => 'image/png',
+    'doc' => 'application/msword',
+    'pdf' => 'application/pdf',
+    'txt' => 'text/plain'
+);
 
 
 // local upload config
@@ -31,22 +47,11 @@ $config['local_upload']['discard_aborted_uploads'] = TRUE;
 $config['local_upload']['image_versions'] = array();
 
 
-
 // AWS S3
 $config['awss3']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
 $config['awss3']['secret'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
 $config['awss3']['bucket'] = 'fpdev';
 
-
-
-// moved to libraries/uploader/config.php
-
-// upload configuration
-//$config['upload']['upload_path'] = WEBROOTPATH.'uploads/';
-//$config['upload']['allowed_types'] = 'gif|jpg|png';
-//$config['upload']['max_size']	= '100';
-//$config['upload']['max_width']  = '1024';
-//$config['upload']['max_height']  = '768';
 
 // allowed mime types in regular expression
 $config['upload']['accept_file_types'] = '/.+$/i';
@@ -54,17 +59,6 @@ $config['upload']['accept_file_types'] = '/.+$/i';
 
 
 
-// allowed extension/mime-type pair
-$config['upload']['allowed_types'] = array(
-    'gif' => 'image/gif',
-    'bmp' => 'image/bmp',
-    'jpeg' => 'image/jpeg',
-    'jpg' => 'image/jpeg',
-    'png' => 'image/png',
-    'doc' => 'application/msword',
-    'pdf' => 'application/pdf',
-    'txt' => 'text/plain'
-);
 
 
 

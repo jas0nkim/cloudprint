@@ -43,6 +43,9 @@ class Uploader {
         }
     }
 
+    /**
+     * @return string
+     */
 	function getFullUrl() {
 		return
 			(isset($_SERVER['HTTPS']) ? 'https://' : 'http://').
@@ -52,7 +55,11 @@ class Uploader {
 			$_SERVER['SERVER_PORT'] == 80 ? '' : ':'.$_SERVER['SERVER_PORT']))).
 			substr($_SERVER['SCRIPT_NAME'],0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
 	}
-    
+
+    /**
+     * @param string $file_name
+     * @return null|stdClass
+     */
     protected function get_file_object($file_name) {
         $file_path = $this->options['upload_dir'].$file_name;
         if (is_file($file_path) && $file_name[0] !== '.') {
@@ -72,7 +79,10 @@ class Uploader {
         }
         return null;
     }
-    
+
+    /**
+     * @return array
+     */
     protected function get_file_objects() {
         return array_values(array_filter(array_map(
             array($this, 'get_file_object'),
@@ -80,6 +90,11 @@ class Uploader {
         )));
     }
 
+    /**
+     * @param string $file_name
+     * @param array $options
+     * @return bool
+     */
     protected function create_scaled_image($file_name, $options) {
         $file_path = $this->options['upload_dir'].$file_name;
         $new_file_path = $options['upload_dir'].$file_name;
@@ -132,7 +147,13 @@ class Uploader {
         @imagedestroy($new_img);
         return $success;
     }
-    
+
+    /**
+     * @param file $uploaded_file
+     * @param stdClass $file
+     * @param string $error
+     * @return string
+     */
     protected function has_error($uploaded_file, $file, $error) {
         if ($error) {
             return $error;
@@ -162,7 +183,12 @@ class Uploader {
         }
         return $error;
     }
-    
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @return string
+     */
     protected function trim_file_name($name, $type) {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
@@ -175,7 +201,15 @@ class Uploader {
         }
         return $file_name;
     }
-    
+
+    /**
+     * @param file $uploaded_file
+     * @param string $name
+     * @param integer $size
+     * @param string $type
+     * @param string $error
+     * @return stdClass
+     */
     protected function handle_file_upload($uploaded_file, $name, $size, $type, $error) {
         $file = new stdClass();
         $file->name = $this->trim_file_name($name, $type);
@@ -227,7 +261,10 @@ class Uploader {
         }
         return $file;
     }
-    
+
+    /**
+     * @return array|null|stdClass
+     */
     public function get() {
         $file_name = isset($_REQUEST['file']) ?
             basename(stripslashes($_REQUEST['file'])) : null;
@@ -236,10 +273,13 @@ class Uploader {
         } else {
             $info = $this->get_file_objects();
         }
-        header('Content-type: application/json');
-        echo json_encode($info);
+
+        return $info;
     }
-    
+
+    /**
+     * @return array|bool
+     */
     public function post() {
         if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
             return $this->delete();
@@ -275,23 +315,13 @@ class Uploader {
                 isset($upload['error']) ? $upload['error'] : null
             );
         }
-        header('Vary: Accept');
-        $json = json_encode($info);
-        $redirect = isset($_REQUEST['redirect']) ?
-            stripslashes($_REQUEST['redirect']) : null;
-        if ($redirect) {
-            header('Location: '.sprintf($redirect, rawurlencode($json)));
-            return;
-        }
-        if (isset($_SERVER['HTTP_ACCEPT']) &&
-            (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
-            header('Content-type: application/json');
-        } else {
-            header('Content-type: text/plain');
-        }
-        echo $json;
+
+        return $info;
     }
-    
+
+    /**
+     * @return bool
+     */
     public function delete() {
         $file_name = isset($_REQUEST['file']) ?
             basename(stripslashes($_REQUEST['file'])) : null;
@@ -305,8 +335,42 @@ class Uploader {
                 }
             }
         }
+
+        return $success;
+    }
+
+    /**
+     * @static
+     * @param $info
+     * @return null|string
+     */
+    public static function encode_json_post($info) {
+        header('Vary: Accept');
+        $json = json_encode($info);
+        $redirect = isset($_REQUEST['redirect']) ?
+            stripslashes($_REQUEST['redirect']) : null;
+        if ($redirect) {
+            header('Location: '.sprintf($redirect, rawurlencode($json)));
+            return null;
+        }
+
+        if (isset($_SERVER['HTTP_ACCEPT']) &&
+            (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+            header('Content-type: application/json');
+        } else {
+            header('Content-type: text/plain');
+        }
+        return $json;
+    }
+
+    /**
+     * @static
+     * @param $info
+     * @return string
+     */
+    public static function encode_json_get($info) {
         header('Content-type: application/json');
-        echo json_encode($success);
+        return json_encode($info);
     }
 }
 

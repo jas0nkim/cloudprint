@@ -151,13 +151,16 @@ class Members extends CI_Controller {
                 break;
             case 'HEAD':
             case 'GET':
-                $this->uploader->get();
+                $info = $this->uploader->get();
+                echo Uploader::encode_json_get($info);
                 break;
             case 'POST':
-                $this->uploader->post();
+                $info = $this->uploader->post();
+                echo Uploader::encode_json_post($info);
                 break;
             case 'DELETE':
-                $this->uploader->delete();
+                $info = $this->uploader->delete();
+                echo Uploader::encode_json_get($info);
                 break;
             default:
                 echo json_encode(array('success' => FALSE));
