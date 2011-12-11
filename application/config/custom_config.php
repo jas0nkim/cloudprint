@@ -4,10 +4,40 @@
 
 $config['salty_salt'] = 'envysea_top_secret_salt';
 
+
+// DB model status
+// users
+$config['user_status']['inactive'] = 0;
+$config['user_status']['active'] = 1;
+$config['user_status']['blocked'] = 2;
+$config['user_status']['deleted'] = 3;
+
+// assets
+$config['asset_status']['local'] = 1;
+$config['asset_status']['s3'] = 2;
+$config['asset_status']['deleted'] = 3;
+
+
+// local upload config
+$config['local_upload']['delete_url'] = '';
+$config['local_upload']['upload_dir'] = WEBROOTPATH . 'uploads/';
+$config['local_upload']['upload_url'] = BASEURL . 'uploads/';
+$config['local_upload']['param_name'] = 'files';
+$config['local_upload']['max_file_size'] = 2097152; // 2MB
+$config['local_upload']['min_file_size'] = 1;
+$config['local_upload']['accept_file_types'] = '/.+$/i'; // must change
+$config['local_upload']['max_number_of_files'] = 5;
+$config['local_upload']['discard_aborted_uploads'] = TRUE;
+$config['local_upload']['image_versions'] = array();
+
+
+
 // AWS S3
 $config['awss3']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
 $config['awss3']['secret'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
 $config['awss3']['bucket'] = 'fpdev';
+
+
 
 // moved to libraries/uploader/config.php
 

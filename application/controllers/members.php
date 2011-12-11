@@ -143,14 +143,9 @@ class Members extends CI_Controller {
      * @return void
      */
     public function upload() {
-        $options = array(
-            'aws_s3_key' => $this->config->item('key', 'awss3'),
-            'aws_s3_secret' => $this->config->item('secret', 'awss3'),
-            'aws_s3_bucket' => $this->config->item('bucket', 'awss3')
-        );
-        $this->load->library('s3uploader', $options);
+        $options = $this->config->item('local_upload');
+        $this->load->library('uploader', $options);
 
-        /*
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'OPTIONS':
                 break;
@@ -167,7 +162,6 @@ class Members extends CI_Controller {
             default:
                 echo json_encode(array('success' => FALSE));
         }
-        */
     }
 
     /**

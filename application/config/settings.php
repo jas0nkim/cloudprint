@@ -86,6 +86,16 @@ if (defined('ENVIRONMENT'))
 	$web_root_folder = '/home/dev/www/webroot';
 
 /*
+ *---------------------------------------------------------------
+ * base url
+ *---------------------------------------------------------------
+ *
+ * WITH TRAILING SLASH!
+ *
+ */
+	$base_url = 'http://freeprint.dev/';
+
+/*
  * --------------------------------------------------------------------
  * DEFAULT CONTROLLER
  * --------------------------------------------------------------------
@@ -217,6 +227,11 @@ if (defined('ENVIRONMENT'))
 
 		define('APPPATH', BASEPATH.$web_root_folder.'/');
 	}
+
+    if (!defined('BASEURL')) {
+        define('BASEURL', $base_url.'/');
+    }
+
 
 /* End of file settings.php */
 /* Location: ./application/config/settings.php */

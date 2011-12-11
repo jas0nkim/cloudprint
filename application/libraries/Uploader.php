@@ -7,7 +7,7 @@ class Uploader {
     function __construct($options=null) {
         $this->options = array(
             'delete_url' => $this->getFullUrl().'/members/file_delete',
-            'upload_dir' => '/home/dev/www/webroot/uploads/',
+            'upload_dir' => '/uploads/',
             'upload_url' => $this->getFullUrl().'/uploads/',
             'param_name' => 'files',
             // The php.ini settings upload_max_filesize and post_max_size
