@@ -229,7 +229,7 @@ if (defined('ENVIRONMENT'))
 	}
 
     if (!defined('BASEURL')) {
-        define('BASEURL', $base_url.'/');
+        define('BASEURL', $base_url);
     }
 
 
