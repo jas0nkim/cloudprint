@@ -16,7 +16,12 @@ class Asset_model extends Crud {
      * @return array
      */
 	public function create_asset($new_asset_array) {
-		$query = $this->db->insert($this->table, $new_asset_array);
+        $new_asset_array['uuid'] = String::uuid();
+        $new_asset_array['extension'] = Asset_model::get_file_extension($new_asset_array['name']);
+        $new_asset_array['status'] = $this->config->item('temp', 'asset_status');
+        $new_asset_array['created_at'] = date('Y-m-d H:i:s');
+
+		$query = $this->insert_entry($new_asset_array);
 
 		if ($query == TRUE) {
 			$data['is_true'] = TRUE;
@@ -28,4 +33,14 @@ class Asset_model extends Crud {
 			return $data;
 		}
 	}
+
+    /**
+     * @static
+     * @param string $file_name
+     * @return string
+     */
+    public static function get_file_extension($file_name) {
+        return strtolower(substr(strrchr($file_name,'.'),1));
+    }
+
 }

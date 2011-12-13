@@ -151,7 +151,7 @@ class Crud extends CI_Model {
     /**
      * insert entry
      *
-     * @param stdClass $data
+     * @param array $data
      * @return Integer last inserted id
      */
     public function insert_entry($data = null) {

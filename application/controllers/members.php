@@ -156,6 +156,14 @@ class Members extends CI_Controller {
                 break;
             case 'POST':
                 $info = $this->uploader->post();
+                foreach($info as $key => $new_asset_array) {
+                    if (!isset($new_asset_array['error'])) {
+                        if (isset($new_asset_array['delete_type'])) unset($new_asset_array['delete_type']);
+                        if (isset($new_asset_array['delete_url'])) unset($new_asset_array['delete_url']);
+                        $this->load->model('asset_model');
+                        $this->asset_model->create_asset($new_asset_array);
+                    }
+                }
                 echo Uploader::encode_json_post($info);
                 break;
             case 'DELETE':
