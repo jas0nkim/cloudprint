@@ -72,7 +72,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = '/home/dev/www/application';
+	$application_folder = '/home/dev/www/publicweb/application';
 
 
 /*
@@ -83,7 +83,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$web_root_folder = '/home/dev/www/webroot';
+	$web_root_folder = '/home/dev/www/publicweb/webroot';
 
 /*
  *---------------------------------------------------------------
