@@ -7,7 +7,7 @@ $config['salty_salt'] = 'envysea_top_secret_salt';
 
 // DB model status
 // users
-$config['user_status']['temp'] = 0;
+$config['user_status']['unverified'] = 0;
 $config['user_status']['active'] = 1;
 $config['user_status']['inactive'] = 2;
 $config['user_status']['deleted'] = 3;
@@ -19,6 +19,25 @@ $config['asset_status']['active'] = 1;
 $config['asset_status']['inactive'] = 2;
 $config['asset_status']['deleted'] = 3;
 $config['asset_status']['local'] = 4;
+
+// print_jobs
+$config['print_job_status']['processing'] = 0;
+$config['print_job_status']['succeeded'] = 1;
+$config['print_job_status']['pending'] = 2;
+$config['print_job_status']['deleted'] = 3;
+$config['print_job_status']['error'] = 4;
+
+// printers
+$config['printer_status']['candidate'] = 0;
+$config['printer_status']['ready'] = 1;
+$config['printer_status']['processing'] = 2;
+$config['printer_status']['removed'] = 3;
+$config['printer_status']['error'] = 4;
+
+// locations
+$config['printer_status']['candidate'] = 0;
+$config['printer_status']['active'] = 1;
+$config['printer_status']['inactive'] = 2;
 
 
 // allowed extension/mime-type pair
