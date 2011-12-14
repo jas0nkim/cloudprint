@@ -1,17 +1,32 @@
 #!/usr/bin/php -q
 <?php
+
+/*
+ * ------------------------------------------------------
+ *  Include files
+ * ------------------------------------------------------
+ */
+
 // settings
 require_once dirname(dirname(__FILE__))."/config/settings.php";
 
-// include pre-required
-require_once BASEPATH."core/Common.php";
-require_once BASEPATH."core/Config.php";
-require_once BASEPATH."database/DB.php";
+// libraries
+require_once LIBSPATH."core/Common.php";
+require_once LIBSPATH."core/Config.php";
+require_once LIBSPATH."database/DB.php";
+require_once LIBSPATH."S3handler.php";
+/* ------------------------------------------------------ */
 
-// testing config class
+
 $config = new CI_Config();
-echo $config->item('encryption_key');
-echo "\n\n";
+
+// AWS S3
+$options = array(
+    'aws_s3_key' => $config->item('key', 'aws_s3'),
+    'aws_s3_secret' => $config->item('secret', 'aws_s3'),
+    'aws_s3_bucket' => $config->item('bucket', 'aws_s3')
+);
+$s3 = new S3handler($options);
 
 // testing db class
 $db = DB();

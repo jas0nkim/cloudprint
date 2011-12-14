@@ -60,6 +60,12 @@ if (defined('ENVIRONMENT'))
 
 /*
  *---------------------------------------------------------------
+ * LIBRARY FOLDER NAME
+ *---------------------------------------------------------------
+ */
+    $library_path = '/home/dev/www/cronengine/libs';
+/*
+ *---------------------------------------------------------------
  * APPLICATION FOLDER NAME
  *---------------------------------------------------------------
  *
@@ -192,5 +198,8 @@ if (defined('ENVIRONMENT'))
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
 
+    if (!defined('LIBSPATH')) {
+        define('LIBSPATH', $library_path.'/');
+    }
 
 /* End of file settings.php */
