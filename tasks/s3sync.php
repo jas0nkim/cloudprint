@@ -5,10 +5,16 @@ require_once dirname(dirname(__FILE__))."/config/settings.php";
 
 // include pre-required
 require_once BASEPATH."core/Common.php";
+require_once BASEPATH."core/Config.php";
 require_once BASEPATH."database/DB.php";
 
-$db = DB();
+// testing config class
+$config = new CI_Config();
+echo $config->item('encryption_key');
+echo "\n\n";
 
+// testing db class
+$db = DB();
 $query = $db->query("select * from assets");
 print_r($query->result());
 

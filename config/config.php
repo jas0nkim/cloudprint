@@ -65,3 +65,5 @@ $config['cache_path'] = '';
 |
 */
 $config['encryption_key'] = 'abcd1234';
+
+$config['base_url'] = '';
