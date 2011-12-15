@@ -1,7 +1,7 @@
 <?php
 
 // include pre-required
-require_once dirname(dirname(__FILE__))."/venders/aws/sdk.class.php";
+require_once dirname(dirname(__FILE__))."/vendors/aws/sdk.class.php";
 
 class S3handler {
     protected $s3;
