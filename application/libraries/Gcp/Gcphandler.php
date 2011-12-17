@@ -12,7 +12,7 @@ class Gcphandler {
 
     public function __construct($options=null) {
         $this->options = array(
-            'company_name' = '',
+            'company_name' => '',
             'gmail' => '',
             'password' => ''
         );
