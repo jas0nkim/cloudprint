@@ -1,6 +1,6 @@
 <?php
 
-// include ZENDPATH into path
+// put ZENDPATH into include_path during the script run
 set_include_path(get_include_path() . PATH_SEPARATOR . ZENDPATH);
 
 require_once 'Zend/Loader.php';
