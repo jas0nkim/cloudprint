@@ -56,7 +56,7 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = '/home/dev/www/system';
+	$system_path = '/home/dev/www/system/CI';
 
 /*
  *---------------------------------------------------------------
@@ -94,6 +94,16 @@ if (defined('ENVIRONMENT'))
  *
  */
 	$base_url = 'http://freeprint.dev/';
+
+/*
+ *---------------------------------------------------------------
+ * Zend library url
+ *---------------------------------------------------------------
+ *
+ * WITH TRAILING SLASH!
+ *
+ */
+    $zend_path = '/home/dev/www/system/Zend';
 
 /*
  * --------------------------------------------------------------------
@@ -228,10 +238,26 @@ if (defined('ENVIRONMENT'))
 		define('APPPATH', BASEPATH.$web_root_folder.'/');
 	}
 
+    // base url
     if (!defined('BASEURL')) {
         define('BASEURL', $base_url);
     }
 
+    // Zend
+    if (realpath($zend_path) !== FALSE)
+    {
+        $zend_path = realpath($zend_path).'/';
+    }
+
+    // ensure there's a trailing slash
+    $zend_path = rtrim($zend_path, '/').'/';
+
+    // Is Zend path correct?
+    if ( ! is_dir($zend_path))
+    {
+        exit("Your Zend folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+    }
+    define('ZENDPATH', str_replace("\\", "/", $zend_path));
 
 /* End of file settings.php */
 /* Location: ./application/config/settings.php */

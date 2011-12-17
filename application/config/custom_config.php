@@ -1,5 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// company/site name
+$config['company_name'] = 'Freeprint';
+
 //make this a random, unguessable, unique character string
 
 $config['salty_salt'] = 'envysea_top_secret_salt';
