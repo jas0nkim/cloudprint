@@ -129,9 +129,14 @@ class Members extends CI_Controller {
         $this->load->view('layouts/default', $data);
     }
 
-
     public function print_now() {
-
+        $options = array(
+            'company_name' => $this->config->item('company_name'),
+            'email' => $this->config->item('email', 'gcp'),
+            'password' => $this->config->item('password', 'gcp')
+        );
+        $this->load->library('gcp/gcphandler', $options);
+        $this->gcphandler->search();
     }
 
     public function print_later() {

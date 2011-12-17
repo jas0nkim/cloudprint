@@ -103,7 +103,7 @@ if (defined('ENVIRONMENT'))
  * WITH TRAILING SLASH!
  *
  */
-    $zend_path = '/home/dev/www/system/Zend';
+    $zend_path = '/home/dev/www/system';
 
 /*
  * --------------------------------------------------------------------

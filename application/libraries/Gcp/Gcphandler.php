@@ -1,6 +1,9 @@
 <?php
 
-require_once ZENDPATH.'Loader.php';
+// include ZENDPATH into path
+set_include_path(get_include_path() . PATH_SEPARATOR . ZENDPATH);
+
+require_once 'Zend/Loader.php';
 
 Zend_Loader::loadClass('Zend_Http_Client');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
@@ -13,8 +16,9 @@ class Gcphandler {
     public function __construct($options=null) {
         $this->options = array(
             'company_name' => '',
-            'gmail' => '',
-            'password' => ''
+            'email' => '',
+            'password' => '',
+            'gcp_interface_url' => 'http://www.google.com/cloudprint/interface'
         );
 
         if ($options) {
@@ -23,7 +27,7 @@ class Gcphandler {
 
         //Actually Register the Printer
         try {
-            $this->client = Zend_Gdata_ClientLogin::getHttpClient($this->options['gmail'], $this->options['password'], 'cloudprint');
+            $this->client = Zend_Gdata_ClientLogin::getHttpClient($this->options['email'], $this->options['password'], 'cloudprint');
         } catch (Zend_Exception $e) {
             echo "Error: " . $e;
         }
@@ -85,7 +89,11 @@ class Gcphandler {
      * @param null $query
      */
     public function search($query=null) {
+        //GCP Services - Register
+        $this->client->setUri($this->options['gcp_interface_url'] . '/search');
 
+        $response = $this->client->request(Zend_Http_Client::POST);
+        print_r(json_decode($response->getBody()));
     }
 
     /**
