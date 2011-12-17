@@ -69,6 +69,10 @@ $config['local_upload']['discard_aborted_uploads'] = TRUE;
 $config['local_upload']['image_versions'] = array();
 
 
+// GCP
+$config['gcp']['email'] = 'fpdev2012@gmail.com';
+$config['gcp']['password'] = 'qwerqwer12341234';
+
 // AWS S3
 $config['awss3']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
 $config['awss3']['secret'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
