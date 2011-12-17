@@ -33,9 +33,9 @@ class Gcphandler {
         }
 
         // Get Token and Add Headers
-        $Client_Login_Token = $this->client->getClientLoginToken();
+        $client_login_token = $this->client->getClientLoginToken();
 
-        $this->client->setHeaders('Authorization','GoogleLogin auth='.$Client_Login_Token);
+        $this->client->setHeaders('Authorization','GoogleLogin auth='.$client_login_token);
         $this->client->setHeaders('X-CloudPrint-Proxy',$this->options['company_name']);
     }
 
