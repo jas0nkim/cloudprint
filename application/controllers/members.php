@@ -136,7 +136,7 @@ class Members extends CI_Controller {
             'password' => $this->config->item('password', 'gcp')
         );
         $this->load->library('gcp/gcpsdk', $options);
-        $this->gcpsdk->search();
+        echo $this->gcpsdk->search();
     }
 
     public function print_later() {

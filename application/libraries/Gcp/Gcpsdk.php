@@ -31,8 +31,8 @@ class Gcpsdk {
         //Actually Register the Printer
         try {
             $this->client = Zend_Gdata_ClientLogin::getHttpClient($this->options['email'], $this->options['password'], 'cloudprint');
-        } catch (Zend_Exception $e) {
-            echo "Error: " . $e;
+        } catch (Zend_Gdata_App_Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
 
         // Get Token and Add Headers
@@ -41,6 +41,12 @@ class Gcpsdk {
         $this->client->setHeaders('Authorization','GoogleLogin auth='.$client_login_token);
         $this->client->setHeaders('X-CloudPrint-Proxy',$this->options['company_name']);
     }
+
+    /**
+     * ----------------------------------------------------
+     * Submitting Print Jobs interfaces
+     * ----------------------------------------------------
+     */
 
     /**
      * The /submit service interface is used to send print jobs to the GCP service. Upon initialization,
@@ -53,36 +59,100 @@ class Gcpsdk {
      * @param $content
      * @param $content_type
      * @param $tag
+     * @param string $return_type ('json' | 'object')
+     * @return mixed
      */
-    public function submit($printer_id, $title, $capabilities, $content, $content_type, $tag) {
+    public function submit($printer_id, $title, $capabilities, $content, $content_type, $tag, $return_type='json') {
+        //GCP Services
+        $this->client->setUri($this->options['gcp_interface_url'] . '/submit');
 
+        // set parameters
+        $this->client->setParameterPost('printerid', $printer_id);
+        $this->client->setParameterPost('title', $title);
+        $this->client->setParameterPost('capabilities', $capabilities);
+        $this->client->setParameterPost('content', $content);
+        $this->client->setParameterPost('contentType', $content_type);
+        $this->client->setParameterPost('tag', $tag);
+
+        try {
+            // get response by sending request to GCP
+            $response = $this->client->request(Zend_Http_Client::POST);
+        } catch (Zend_Http_Client_Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        return $this->get_return_value($response->getBody(), $return_type);
     }
 
     /**
      * The /jobs interface retrieves the status of print jobs for a user.
      *
      * @param null $printer_id
+     * @param string $return_type ('json' | 'object')
+     * @return mixed
      */
-    public function jobs($printer_id=null) {
+    public function jobs($printer_id=null, $return_type='json') {
+        //GCP Services
+        $this->client->setUri($this->options['gcp_interface_url'] . '/jobs');
 
+        // set parameters
+        $this->client->setParameterPost('printerid', $printer_id);
+
+        try {
+            // get response by sending request to GCP
+            $response = $this->client->request(Zend_Http_Client::POST);
+        } catch (Zend_Http_Client_Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        return $this->get_return_value($response->getBody(), $return_type);
     }
 
     /**
      * The /deletejob interface deletes the given print job.
      *
      * @param $job_id
+     * @param string $return_type
+     * @return mixed
      */
-    public function deletejob($job_id) {
+    public function deletejob($job_id, $return_type='json') {
+        //GCP Services
+        $this->client->setUri($this->options['gcp_interface_url'] . '/deletejob');
 
+        // set parameters
+        $this->client->setParameterPost('jobid', $job_id);
+
+        try {
+            // get response by sending request to GCP
+            $response = $this->client->request(Zend_Http_Client::POST);
+        } catch (Zend_Http_Client_Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        return $this->get_return_value($response->getBody(), $return_type);
     }
 
     /**
      * The /printer interface retrieves the capabilities of the specified printer.
      *
      * @param $printer_id
+     * @return mixed
      */
     public function printer($printer_id) {
+        //GCP Services
+        $this->client->setUri($this->options['gcp_interface_url'] . '/deletejob');
 
+        // set parameters
+        $this->client->setParameterPost('printid', $printer_id);
+
+        try {
+            // get response by sending request to GCP
+            $response = $this->client->request(Zend_Http_Client::POST);
+        } catch (Zend_Http_Client_Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        return $this->get_return_value($response->getBody(), $return_type);
     }
 
     /**
@@ -90,14 +160,32 @@ class Gcpsdk {
      * taking an optional search query as parameter.
      *
      * @param null $query
+     * @param string $return_type
+     * @return mixed
      */
-    public function search($query=null) {
+    public function search($query=null, $return_type='json') {
         //GCP Services - Register
         $this->client->setUri($this->options['gcp_interface_url'] . '/search');
 
-        $response = $this->client->request(Zend_Http_Client::POST);
-        print_r(json_decode($response->getBody()));
+        // set parameters
+        $this->client->setParameterPost('q', $query);
+
+        try {
+            // get response by sending request to GCP
+            $response = $this->client->request(Zend_Http_Client::POST);
+        } catch (Zend_Http_Client_Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        return $this->get_return_value($response->getBody(), $return_type);
     }
+
+
+    /**
+     * ----------------------------------------------------
+     * Receiving Print Jobs interfaces
+     * ----------------------------------------------------
+     */
 
     /**
      * This interface can be used by the printer / software connector to update Google Cloud Print about the
@@ -181,6 +269,20 @@ class Gcpsdk {
      */
     public function update($printer_id, $printer, $display_name, $proxy, $capabilities, $defaults, $tag, $status, $description, $caps_hash) {
 
+    }
+
+    /**
+     * get return value from given GCP response
+     *
+     * @param $value
+     * @param $return_type
+     * @return mixed
+     */
+    private function get_return_value($value, $return_type) {
+        if ($return_type != 'json') {
+            return json_decode($value);
+        }
+        return $value;
     }
 }
 
