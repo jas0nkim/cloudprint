@@ -144,7 +144,7 @@ class Gcpsdk {
         $this->client->setUri($this->options['gcp_interface_url'] . '/printer');
 
         // set parameters
-        $this->client->setParameterPost('printid', $printer_id);
+        $this->client->setParameterPost('printerid', $printer_id);
 
         try {
             // get response by sending request to GCP
