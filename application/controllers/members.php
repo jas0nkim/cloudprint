@@ -209,6 +209,23 @@ class Members extends CI_Controller {
         echo $gcp->printer($printer_id);
     }
 
+    public function test_gcp_jobs() {
+        $gcp = $this->init_gcp();
+        $printer_id = '7189ce1f-4f61-cc02-22be-e73cf9e51954';
+        echo $gcp->jobs($printer_id);
+    }
+
+    public function test_gcp_submit() {
+        $gcp = $this->init_gcp();
+        $printer_id = '7189ce1f-4f61-cc02-22be-e73cf9e51954';
+        $title = 'test print';
+        $capabilties = '';
+        $content = '';
+        $content_type = 'url';
+        $tag = '';
+        echo $gcp->submit($printer_id, $title, $capabilties, $content, $content_type, $tag);
+    }
+
     /**
      * @return Gcpsdk
      */
