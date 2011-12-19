@@ -130,13 +130,7 @@ class Members extends CI_Controller {
     }
 
     public function print_now() {
-        $options = array(
-            'company_name' => $this->config->item('company_name'),
-            'email' => $this->config->item('email', 'gcp'),
-            'password' => $this->config->item('password', 'gcp')
-        );
-        $this->load->library('gcp/gcpsdk', $options);
-        echo $this->gcpsdk->search();
+
     }
 
     public function print_later() {
@@ -198,6 +192,36 @@ class Members extends CI_Controller {
                 echo json_encode(array('success' => FALSE));
         }
     }
+
+/**
+ * -----------------------------------------------------------------------------------
+ * Test GCP Interfaces
+ * -----------------------------------------------------------------------------------
+ */
+    public function test_gcp_search() {
+        $gcp = $this->init_gcp();
+        echo $gcp->search();
+    }
+
+    public function test_gcp_printer() {
+        $gcp = $this->init_gcp();
+        $printer_id = '7189ce1f-4f61-cc02-22be-e73cf9e51954';
+        echo $gcp->printer($printer_id);
+    }
+
+    /**
+     * @return Gcpsdk
+     */
+    private function init_gcp() {
+        $options = array(
+            'company_name' => $this->config->item('company_name'),
+            'email' => $this->config->item('email', 'gcp'),
+            'password' => $this->config->item('password', 'gcp')
+        );
+        $this->load->library('gcp/gcpsdk', $options);
+        return $this->gcpsdk;
+    }
+
     
 }
 

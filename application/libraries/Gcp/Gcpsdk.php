@@ -136,11 +136,12 @@ class Gcpsdk {
      * The /printer interface retrieves the capabilities of the specified printer.
      *
      * @param $printer_id
+     * @param string $return_type
      * @return mixed
      */
-    public function printer($printer_id) {
+    public function printer($printer_id, $return_type='json') {
         //GCP Services
-        $this->client->setUri($this->options['gcp_interface_url'] . '/deletejob');
+        $this->client->setUri($this->options['gcp_interface_url'] . '/printer');
 
         // set parameters
         $this->client->setParameterPost('printid', $printer_id);
