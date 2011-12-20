@@ -3,17 +3,22 @@
 
 /*
  * ------------------------------------------------------
- *  Include files
+ *  Load required files
  * ------------------------------------------------------
  */
 
-// settings
+// load settings
 require_once dirname(dirname(__FILE__))."/config/settings.php";
 
-// libraries
+// load base libraries
 require_once LIBSPATH."core/Common.php";
 require_once LIBSPATH."core/Config.php";
 require_once LIBSPATH."database/DB.php";
+
+// load modals
+require_once MODELPATH."gcp_printer_model.php";
+
+// load GCP libraries
 require_once GCPPATH."gcp.sdk.php";
 require_once LIBSPATH."GCPhandler.php";
 /* ------------------------------------------------------ */

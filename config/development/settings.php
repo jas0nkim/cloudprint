@@ -18,6 +18,7 @@
  *---------------------------------------------------------------
  */
     $library_path = ENV_DEPENDENT_PATH.'cronengine/libs';
+
 /*
  *---------------------------------------------------------------
  * APPLICATION FOLDER NAME
@@ -33,6 +34,22 @@
  *
  */
 	$application_folder = ENV_DEPENDENT_PATH.'cronengine';
+
+/*
+ *---------------------------------------------------------------
+ * MODEL FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * If you want this front controller to use a different "application"
+ * folder then the default one you can set its name here. The folder
+ * can also be renamed or relocated anywhere on your server.  If
+ * you do, use a full server path. For more info please see the user guide:
+ * http://codeigniter.com/user_guide/general/managing_apps.html
+ *
+ * NO TRAILING SLASH!
+ *
+ */
+	$model_folder = ENV_DEPENDENT_PATH.'cronengine/models';
 
 /*
  *---------------------------------------------------------------
@@ -183,6 +200,21 @@
 
     if (!defined('LIBSPATH')) {
         define('LIBSPATH', $library_path.'/');
+    }
+
+    // The path to the models folder
+    if (is_dir($model_folder))
+    {
+        define('MODELPATH', $model_folder.'/');
+    }
+    else
+    {
+        if ( ! is_dir(BASEPATH.$model_folder.'/'))
+        {
+            exit("Your models folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+        }
+
+        define('MODELPATH', BASEPATH.$model_folder.'/');
     }
 
     // Zend
