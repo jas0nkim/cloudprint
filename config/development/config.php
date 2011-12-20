@@ -68,6 +68,11 @@ $config['encryption_key'] = 'abcd1234';
 
 $config['base_url'] = '';
 
+// AWS
 $config['aws_s3']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
 $config['aws_s3']['secret'] = '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';
 $config['aws_s3']['bucket'] = 'fpdev';
+
+// GCP
+$config['gcp']['email'] = 'fpdev2012@gmail.com';
+$config['gcp']['password'] = 'qwerqwer12341234';
