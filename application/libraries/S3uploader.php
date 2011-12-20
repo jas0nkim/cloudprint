@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Uploader.php';
 
 // include AWS SDK
-include_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'third_party' . DIRECTORY_SEPARATOR . 'aws' . DIRECTORY_SEPARATOR . 'sdk.class.php';
+include_once AWSPATH . 'sdk.class.php';
 
 class S3uploader extends Uploader {
 

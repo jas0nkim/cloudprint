@@ -97,13 +97,33 @@ if (defined('ENVIRONMENT'))
 
 /*
  *---------------------------------------------------------------
- * Zend library url
+ * Zend library location
  *---------------------------------------------------------------
  *
  * WITH TRAILING SLASH!
  *
  */
     $zend_path = '/home/dev/www/system';
+
+/*
+ *---------------------------------------------------------------
+ * AWS SDK location
+ *---------------------------------------------------------------
+ *
+ * WITH TRAILING SLASH!
+ *
+ */
+    $aws_path = '/home/dev/www/system/aws';
+
+/*
+ *---------------------------------------------------------------
+ * GCP SDK location
+ *---------------------------------------------------------------
+ *
+ * WITH TRAILING SLASH!
+ *
+ */
+    $gcp_path = '/home/dev/www/system/gcp';
 
 /*
  * --------------------------------------------------------------------
@@ -258,6 +278,38 @@ if (defined('ENVIRONMENT'))
         exit("Your Zend folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
     }
     define('ZENDPATH', str_replace("\\", "/", $zend_path));
+
+    // AWS
+    if (realpath($aws_path) !== FALSE)
+    {
+        $aws_path = realpath($aws_path).'/';
+    }
+
+    // ensure there's a trailing slash
+    $aws_path = rtrim($aws_path, '/').'/';
+
+    // Is AWS path correct?
+    if ( ! is_dir($aws_path))
+    {
+        exit("Your AWS folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+    }
+    define('AWSPATH', str_replace("\\", "/", $aws_path));
+
+    // GCP
+    if (realpath($gcp_path) !== FALSE)
+    {
+        $gcp_path = realpath($gcp_path).'/';
+    }
+
+    // ensure there's a trailing slash
+    $gcp_path = rtrim($gcp_path, '/').'/';
+
+    // Is GCP path correct?
+    if ( ! is_dir($gcp_path))
+    {
+        exit("Your GCP folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+    }
+    define('GCPPATH', str_replace("\\", "/", $gcp_path));
 
 /* End of file settings.php */
 /* Location: ./application/config/settings.php */

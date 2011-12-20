@@ -227,7 +227,7 @@ class Members extends CI_Controller {
     }
 
     /**
-     * @return Gcpsdk
+     * @return GoogleCloudPrint
      */
     private function init_gcp() {
         $options = array(
@@ -235,8 +235,8 @@ class Members extends CI_Controller {
             'email' => $this->config->item('email', 'gcp'),
             'password' => $this->config->item('password', 'gcp')
         );
-        $this->load->library('gcp/gcpsdk', $options);
-        return $this->gcpsdk;
+        require_once GCPPATH . 'gcp.sdk.php';
+        return new GoogleCloudPrint($options);
     }
 
     
