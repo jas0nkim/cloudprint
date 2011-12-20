@@ -30,7 +30,7 @@ $s3 = new S3handler($options);
 
 // testing db class
 $db = DB();
-$query = $db->query("select * from assets");
+$query = $db->query("select * from users");
 print_r($query->result());
 
 
