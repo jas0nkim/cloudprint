@@ -216,14 +216,20 @@ class Members extends CI_Controller {
     }
 
     public function test_gcp_submit() {
-        $gcp = $this->init_gcp();
-        $printer_id = '7189ce1f-4f61-cc02-22be-e73cf9e51954';
-        $title = 'test print';
-        $capabilties = '';
-        $content = '';
-        $content_type = 'url';
-        $tag = '';
-        echo $gcp->submit($printer_id, $title, $capabilties, $content, $content_type, $tag);
+        $this->load->model('Gcp_printer_model');
+        $conditions = array('printerid' => '7189ce1f-4f61-cc02-22be-e73cf9e51954');
+        $query = $this->Gcp_printer_model->select_one_where($conditions);
+
+        foreach ($query->result() as $row) {
+            $gcp = $this->init_gcp();
+            $printer_id = $row->printerid;
+            $title = 'jason test print';
+            $capabilities = $row->capabilities;
+            $content = 'http://www.google.com';
+            $content_type = 'url';
+            $tag = '';
+            echo $gcp->submit($printer_id, $title, $capabilities, $content, $content_type, $tag);
+        }
     }
 
     /**

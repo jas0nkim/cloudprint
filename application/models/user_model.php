@@ -2,13 +2,12 @@
 
 class User_model extends Crud {
 
-    public function __construct($data = array()) {
-        parent::__construct();
-
+    /**
+     * @param null $columns
+     */
+    public function __construct($columns=null) {
         $this->table = 'users';
-        foreach ($data as $key => $value) {
-            $this->{$key} = $value;
-        }
+        parent::__construct($columns);
     }
 
 	function verify_and_get_user($username, $password) {

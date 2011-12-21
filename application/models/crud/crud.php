@@ -20,10 +20,18 @@ class Crud extends CI_Model {
 
     /**
      * construct
+     *
+     * @param null $columns
      */
-    public function __construct() {
+    public function __construct($columns=null) {
+        $this->columns = array();
+        if ($columns) {
+            $this->columns = array_replace_recursive($this->columns, $columns);
+        }
+
         parent::__construct();
     }
+
 
     /**
      * override CI_Model __get()
@@ -155,6 +163,9 @@ class Crud extends CI_Model {
      * @return Integer last inserted id
      */
     public function insert_entry($data = null) {
+        if (!is_array($data)) {
+            $data = $this->columns;
+        }
         $this->db->insert($this->table, $data);
 
         return $this->db->insert_id();
