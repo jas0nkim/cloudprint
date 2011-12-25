@@ -130,11 +130,9 @@ class Members extends CI_Controller {
     }
 
     public function print_now() {
+        $data['title'] = 'Print your documents now | Freeprint Authentication';
 
-    }
-
-    public function print_later() {
-        
+        $this->load->view('layouts/default', $data);
     }
 
     /**
