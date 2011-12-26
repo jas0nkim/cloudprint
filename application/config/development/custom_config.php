@@ -55,7 +55,7 @@ $config['printer_status']['inactive'] = 2;
 // local upload config
 $config['local_upload']['delete_url'] = '';
 $config['local_upload']['upload_dir'] = WEBROOTPATH . 'uploads/';
-$config['local_upload']['upload_url'] = BASEURL . 'uploads/';
+$config['local_upload']['upload_url'] = BASEURL . '/uploads/';
 $config['local_upload']['param_name'] = 'files';
 $config['local_upload']['max_file_size'] = 2097152; // 2MB
 $config['local_upload']['min_file_size'] = 1;
