@@ -141,6 +141,7 @@ class Members extends CI_Controller {
      */
     public function upload() {
         $options = $this->config->item('local_upload');
+        $options['uuid'] = String::uuid();
         $this->load->library('uploader', $options);
 
         switch ($_SERVER['REQUEST_METHOD']) {

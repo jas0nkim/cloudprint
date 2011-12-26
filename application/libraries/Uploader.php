@@ -6,6 +6,7 @@ class Uploader {
     
     function __construct($options=null) {
         $this->options = array(
+            'uuid' => '',
             'delete_url' => $this->getFullUrl().'/members/file_delete',
             'upload_dir' => '/uploads/',
             'upload_url' => $this->getFullUrl().'/uploads/',
@@ -65,16 +66,17 @@ class Uploader {
         $file_path = $this->options['upload_dir'].$file_name;
         if (is_file($file_path) && $file_name[0] !== '.') {
             $file = array();
+            $file['uuid'] = $this->options['uuid'];
             $file['name'] = $file_name;
             $file['size'] = filesize($file_path);
-            $file['url'] = $this->options['upload_url'].rawurlencode($file['name']);
+            $file['url'] = $this->options['upload_url'].rawurlencode($file['uuid']);
             foreach($this->options['image_versions'] as $version => $options) {
                 if (is_file($options['upload_dir'].$file_name)) {
                     $file[$version.'_url'] = $options['upload_url']
-                        .rawurlencode($file['name']);
+                        .rawurlencode($file['uuid']);
                 }
             }
-            $file['delete_url'] = $this->options['delete_url'].'?file='.rawurlencode($file['name']);
+            $file['delete_url'] = $this->options['delete_url'].'?file='.rawurlencode($file['uuid']);
             $file['delete_type'] = 'DELETE';
             return $file;
         }
@@ -216,12 +218,13 @@ class Uploader {
      */
     protected function handle_file_upload($uploaded_file, $name, $size, $type, $error) {
         $file = array();
+        $file['uuid'] = $this->options['uuid'];
         $file['name'] = $this->trim_file_name($name, $type);
         $file['size'] = intval($size);
         $file['type'] = $type;
         $error = $this->has_error($uploaded_file, $file, $error);
         if (!$error && $file['name']) {
-            $file_path = $this->options['upload_dir'].$file['name'];
+            $file_path = $this->options['upload_dir'].$file['uuid'];
             $append_file = !$this->options['discard_aborted_uploads'] &&
                 is_file($file_path) && $file['size'] > filesize($file_path);
             clearstatcache();
@@ -246,11 +249,11 @@ class Uploader {
             }
             $file_size = filesize($file_path);
             if ($file_size === $file['size']) {
-                $file['url'] = $this->options['upload_url'].rawurlencode($file['name']);
+                $file['url'] = $this->options['upload_url'].rawurlencode($file['uuid']);
                 foreach($this->options['image_versions'] as $version => $options) {
                     if ($this->create_scaled_image($file['name'], $options)) {
                         $file[$version.'_url'] = $options['upload_url']
-                            .rawurlencode($file['name']);
+                            .rawurlencode($file['uuid']);
                     }
                 }
             } elseif ($this->options['discard_aborted_uploads']) {
@@ -258,7 +261,7 @@ class Uploader {
                 $file['error'] = 'abort';
             }
             $file['size'] = $file_size;
-            $file['delete_url'] = $this->options['delete_url'].'?file='.rawurlencode($file['name']);
+            $file['delete_url'] = $this->options['delete_url'].'?file='.rawurlencode($file['uuid']);
             $file['delete_type'] = 'DELETE';
         } else {
             $file['error'] = $error;
