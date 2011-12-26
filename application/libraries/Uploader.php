@@ -15,6 +15,7 @@ class Uploader {
             'max_file_size' => null,
             'min_file_size' => 1,
             'accept_file_types' => '/.+$/i',
+            'accept_file_mime_types' => '/.+$/i',
             'max_number_of_files' => null,
             // Set the following option to false to enable non-multipart uploads:
             'discard_aborted_uploads' => true,
@@ -160,6 +161,9 @@ class Uploader {
         }
         if (!preg_match($this->options['accept_file_types'], $file['name'])) {
             return 'acceptFileTypes';
+        }
+        if (!preg_match($this->options['accept_file_mime_types'], $file['type'])) {
+            return 'acceptFileMimeTypes';
         }
         if ($uploaded_file && is_uploaded_file($uploaded_file)) {
             $file_size = filesize($uploaded_file);
