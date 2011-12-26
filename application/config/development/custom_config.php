@@ -8,7 +8,11 @@ $config['company_name'] = 'Freeprint';
 $config['salty_salt'] = 'envysea_top_secret_salt';
 
 
-// DB model status
+/*
+ * ------------------------------------------------------
+ *  DB model status
+ * ------------------------------------------------------
+ */
 // users
 $config['user_status']['unverified'] = 0;
 $config['user_status']['active'] = 1;
@@ -43,18 +47,14 @@ $config['printer_status']['active'] = 1;
 $config['printer_status']['inactive'] = 2;
 
 
-// allowed extension/mime-type pair
-$config['upload']['allowed_types'] = array(
-    'gif' => 'image/gif',
-    'bmp' => 'image/bmp',
-    'jpeg' => 'image/jpeg',
-    'jpg' => 'image/jpeg',
-    'png' => 'image/png',
-    'doc' => 'application/msword',
-    'pdf' => 'application/pdf',
-    'txt' => 'text/plain'
-);
-
+/*
+ * ------------------------------------------------------
+ *  File upload
+ * ------------------------------------------------------
+ */
+// allowed mime types in regular expression:
+// image/jpeg, image/png, application/pdf and application/msword
+$config['upload']['allowed_mine_types'] = '/image\/(jpeg|png)|application\/(pdf|msword)/i';
 
 // local upload config
 $config['local_upload']['delete_url'] = '';
@@ -63,7 +63,7 @@ $config['local_upload']['upload_url'] = BASEURL . 'uploads/';
 $config['local_upload']['param_name'] = 'files';
 $config['local_upload']['max_file_size'] = 2097152; // 2MB
 $config['local_upload']['min_file_size'] = 1;
-$config['local_upload']['accept_file_types'] = '/.+$/i'; // must change
+$config['local_upload']['accept_file_types'] = '/(\.|\/)(jpe?g|png|pdf|doc)$/i'; // jpeg, jpg, png, pdf and doc
 $config['local_upload']['max_number_of_files'] = 5;
 $config['local_upload']['discard_aborted_uploads'] = TRUE;
 $config['local_upload']['image_versions'] = array();
@@ -79,8 +79,6 @@ $config['awss3']['secret'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
 $config['awss3']['bucket'] = 'fpdev';
 
 
-// allowed mime types in regular expression
-$config['upload']['accept_file_types'] = '/.+$/i';
 
 
 
