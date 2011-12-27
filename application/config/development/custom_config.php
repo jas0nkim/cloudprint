@@ -61,7 +61,7 @@ $config['local_upload']['max_file_size'] = 2097152; // 2MB
 $config['local_upload']['min_file_size'] = 1;
 $config['local_upload']['accept_file_types'] = '/(\.|\/)(jpe?g|png|pdf|doc)$/i'; // jpeg, jpg, png, pdf and doc
 $config['local_upload']['accept_file_mime_types'] = '/image\/(jpeg|png)|application\/(pdf|msword)/i'; // image/jpeg, image/png, application/pdf and application/msword
-$config['local_upload']['max_number_of_files'] = 5;
+$config['local_upload']['max_number_of_files'] = null;
 $config['local_upload']['discard_aborted_uploads'] = TRUE;
 $config['local_upload']['image_versions'] = array();
 
