@@ -1,5 +1,4 @@
 <!-- include javascript files -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="/js/uploader/vendor/jquery.ui.widget.js"></script>
 <script src="/js/uploader/jquery.iframe-transport.js"></script>
 <script src="/js/uploader/jquery.fileupload.js"></script>
