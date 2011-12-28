@@ -16,7 +16,7 @@ class Asset_model extends Crud {
      */
 	public function create_asset($new_asset_array) {
         $default_new_asset_array['uuid'] = String::uuid();
-        $default_new_asset_array['extension'] = Asset_model::get_file_extension($new_asset_array['name']);
+        $default_new_asset_array['extension'] = get_file_extension($new_asset_array['name']);
         $default_new_asset_array['status'] = $this->config->item('temp', 'asset_status');
         $default_new_asset_array['created_at'] = date('Y-m-d H:i:s');
 
@@ -36,14 +36,4 @@ class Asset_model extends Crud {
 			return $data;
 		}
 	}
-
-    /**
-     * @static
-     * @param string $file_name
-     * @return string
-     */
-    public static function get_file_extension($file_name) {
-        return strtolower(substr(strrchr($file_name,'.'),1));
-    }
-
 }

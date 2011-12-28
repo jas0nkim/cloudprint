@@ -75,3 +75,11 @@
 		}
 		return null;
 	}
+
+    /**
+     * @param string $file_name
+     * @return string
+     */
+    function get_file_extension($file_name) {
+        return strtolower(substr(strrchr($file_name,'.'),1));
+    }
