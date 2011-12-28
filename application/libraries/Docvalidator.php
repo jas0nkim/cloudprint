@@ -44,6 +44,7 @@ class Docvalidator {
 
     /**
      * @param $file_name
+     * @return int|void
      */
     public function get_numb_of_pages($file_name) {
         if (Docvalidator::is_doc($file_name)) {
@@ -51,10 +52,25 @@ class Docvalidator {
         } elseif (Docvalidator::is_pdf($file_name)) {
             return $this->get_pdf_numb_of_pages($file_name);
         }
+        return 0;
     }
 
+    /**
+     * @param $file_name
+     * @return int
+     * @throws Exception
+     */
     private function get_doc_numb_of_pages($file_name) {
+        $live_docx = new Zend_Service_LiveDocx_MailMerge();
+        if (!isset($this->options['livedocx_username']) || !isset($this->options['livedocx_password'])) {
+            throw new Exception('LiveDocx username/password must be entered to count number of pages of .doc file');
+        }
 
+        $live_docx->setUsername($this->options['livedocx_username'])
+                ->setPassword($this->options['livedocx_password']);
+        $live_docx->setLocalTemplate($file_name);
+        $meta_files = $live_docx->getAllMetafiles();
+        return count($meta_files);
     }
 
     private function get_pdf_numb_of_pages($file_name) {

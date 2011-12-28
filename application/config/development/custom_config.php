@@ -75,36 +75,11 @@ $config['awss3']['key'] = 'AKIAIQV4T3D6AEPSJITQ';
 $config['awss3']['secret'] = 'MwzG2Rv61nZc6JOg2ahaqPavDNhMCy74Y019EHU';
 $config['awss3']['bucket'] = 'fpdev';
 
+// LiveDocx
+$config['livedocx']['username'] = 'fpdev2012';
+$config['livedocx']['password'] = 'qwer1234';
 
 
-
-
-
-
-
-
-
-// copied from libraries/uploader/config.php
-
-// allowed extension/mime-type pair
-//$allowed_file_types = array(
-//    'gif' => 'image/gif',
-//    'bmp' => 'image/bmp',
-//    'jpeg' => 'image/jpeg',
-//    'jpg' => 'image/jpeg',
-//    'png' => 'image/png',
-//    'doc' => 'application/msword',
-//    'pdf' => 'application/pdf',
-//    'txt' => 'text/plain'
-//);
-
-//define('ALLOWED_FILE_TYPES', serialize($allowed_file_types));
-
-//define('MAX_SIZE', 2);
-
-
-
-// moved to third_party/aws/config.inc.php
-
+/* End of file custom_config.php */
 
 
