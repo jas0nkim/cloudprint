@@ -44,6 +44,10 @@ class GCPhandler {
         }
     }
 
+    public function get_jobs() {
+        return json_decode($this->gcp->jobs());
+    }
+
     public function create_printer() {
         // search printers
         $info = json_decode($this->gcp->search());

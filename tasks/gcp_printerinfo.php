@@ -33,6 +33,7 @@ $gcp_options = array(
 );
 
 $gcp = new GCPhandler($gcp_options);
-$gcp->create_printer();
+// $gcp->create_printer();
+print_r($gcp->get_jobs());
 
 /* End of file gcp_printerinfo.php */
