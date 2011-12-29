@@ -4,6 +4,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . ZENDPATH);
 
 require_once 'Zend/Loader.php';
 
+Zend_Loader::loadClass('Zend_Service_LiveDocx_Exception');
 Zend_Loader::loadClass('Zend_Service_LiveDocx_MailMerge');
 
 class Docvalidator {
@@ -46,11 +47,11 @@ class Docvalidator {
      * @param $file_name
      * @return int|void
      */
-    public function get_numb_of_pages($file_name) {
+    public function get_page_count($file_name) {
         if (Docvalidator::is_doc($file_name)) {
-            return $this->get_doc_numb_of_pages($file_name);
+            return $this->get_doc_page_count($file_name);
         } elseif (Docvalidator::is_pdf($file_name)) {
-            return $this->get_pdf_numb_of_pages($file_name);
+            return $this->get_pdf_page_count($file_name);
         }
         return 0;
     }
@@ -60,7 +61,7 @@ class Docvalidator {
      * @return int
      * @throws Exception
      */
-    private function get_doc_numb_of_pages($file_name) {
+    private function get_doc_page_count($file_name) {
         $live_docx = new Zend_Service_LiveDocx_MailMerge();
         if (!isset($this->options['livedocx_username']) || !isset($this->options['livedocx_password'])) {
             throw new Exception('LiveDocx username/password must be entered to count number of pages of .doc file');
@@ -73,7 +74,7 @@ class Docvalidator {
         return count($meta_files);
     }
 
-    private function get_pdf_numb_of_pages($file_name) {
+    private function get_pdf_page_count($file_name) {
 
     }
 

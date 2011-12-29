@@ -244,7 +244,28 @@ class Members extends CI_Controller {
         return new GoogleCloudPrint($options);
     }
 
-    
+/**
+ * -----------------------------------------------------------------------------------
+ * Test LiveDocx
+ * -----------------------------------------------------------------------------------
+ */
+    public function test_count_doc() {
+        $livedocx_username = $this->config->item('username', 'livedocx');
+        $livedocx_password = $this->config->item('password', 'livedocx');
+
+        echo "LiveDocx Username: ".$livedocx_username."<br><br>";
+        echo "LiveDocx Password: ".$livedocx_password."<br><br>";
+
+        $options = array(
+            'livedocx_username' => $livedocx_username,
+            'livedocx_password' => $livedocx_password,
+        );
+        $this->load->library('docvalidator', $options);
+        echo $this->docvalidator->get_page_count('/home/dev/www/publicweb/webroot/uploads/test_01.doc');
+
+    }
+
+
 }
 
 /* End of file members.php */
