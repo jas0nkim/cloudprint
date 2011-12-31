@@ -21,6 +21,7 @@ class Fileconvertor {
      * @param array $fileinfo
      * Expected :
      *  array(
+            [uuid] => 4ef79cd4-0c8c-461c-8e1c-03cac0a83896
             [name] => test.doc
             [type] => application/msword
             [tmp_name] => /Applications/MAMP/tmp/php/php09PYNO
@@ -28,22 +29,21 @@ class Fileconvertor {
             [size] => 79360
         )
      *
-     *
      * @return \Fileconvertor
      */
     public function __construct($fileinfo) {
 
         // folder to process all the files etc
-        define('TMP_FOLDER', TMP . 'filegenerator/' . $this->generatefoldername () . '/');
+        define('TMP_FOLDER', WEBROOTPATH . 'uploads/fileconvertor/' . $this->generatefoldername() . '/');
 
         // where unoconv is installed
         define('UNOCONV_PATH', '/usr/bin/unoconv');
         // where to store pdf files
-        define('PDFSTORE', ROOT . '/uploads/generatedpdfs/');
+        define('PDFSTORE', WEBROOTPATH . 'uploads/convertedpdfs/');
         // where to store doc files
-        define('DOCSTORE', ROOT . '/uploads/docfiles/');
+        define('DOCSTORE', WEBROOTPATH . 'uploads/');
         // apache home dir
-        define('APACHEHOME', '/home/apache');
+        define('APACHEHOME', '/home/www-data');
         // set some shell enviroment vars
         putenv("HOME=".APACHEHOME);
         putenv("PWD=".APACHEHOME);
@@ -51,7 +51,7 @@ class Fileconvertor {
         // check the file info is passed the tmp file is there and the correct file type is set
         // and the tmp folder could be created
         if (is_array($fileinfo)
-            && file_exists( $fileinfo['tmp_name'])
+            && file_exists($fileinfo['tmp_name'])
             && in_array($fileinfo['type'], array_keys($this->allowable_files))
             && $this->createtmp()) {
 
@@ -72,10 +72,10 @@ class Fileconvertor {
      *      * takes the file set in the constuctor and turns it into a pdf
      * stores it in /uploads/docfiles and returns the filename
      *
-     * @param bool $foldername
+     * @param string $foldername
      * @return filename if pdf was generated
      */
-    public function convertDocToPdf($foldername=false) {
+    public function convertDocToPdf($foldername=null) {
 
         if ($this->pass) {
 
@@ -94,8 +94,8 @@ class Fileconvertor {
 
             //echo $run; die;
             $pdf = shell_exec($run);
-            $end_of_line = strpos ( $pdf, "\n" );
-            $start_of_file = substr ( $pdf, 0, $end_of_line );
+            $end_of_line = strpos($pdf, "\n");
+            $start_of_file = substr($pdf, 0, $end_of_line);
 
             if (!preg_match("/%PDF/i", $start_of_file)) {
                 die('Error Generating the PDF file');
@@ -106,7 +106,7 @@ class Fileconvertor {
             }
 
             // file saved
-            if(!$this->_createandsave($pdf, PDFSTORE.'/'.$foldername.'/', $output_pdf_name)){
+            if(!$this->_createandsave($pdf, PDFSTORE.$foldername.'/', $output_pdf_name)){
                 die('Error Saving The PDF');
             }
 
