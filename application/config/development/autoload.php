@@ -52,8 +52,16 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'form_validation', 'Auth', 'session', 'String');
+$autoload['libraries'] = array('database', 'form_validation', 'Auth', 'session');
 
+/**
+ * -------------------------------------------------------------------
+ * Load other common libraries in system (/system/other_common_libs)
+ * -------------------------------------------------------------------
+ */
+
+require_once(OTHERCOMMONLIBSPATH.'static_functions.php');
+require_once(OTHERCOMMONLIBSPATH.'String.php');
 
 /*
 | -------------------------------------------------------------------
@@ -64,7 +72,7 @@ $autoload['libraries'] = array('database', 'form_validation', 'Auth', 'session',
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'form', 'html', 'basics');
+$autoload['helper'] = array('url', 'form', 'html');
 
 
 /*

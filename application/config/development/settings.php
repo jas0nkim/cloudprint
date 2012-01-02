@@ -80,6 +80,16 @@
     $gcp_path = ENV_DEPENDENT_PATH.'system/gcp';
 
 /*
+ *---------------------------------------------------------------
+ * Other common libraries location
+ *---------------------------------------------------------------
+ *
+ * WITH TRAILING SLASH!
+ *
+ */
+    $other_common_libs_path = ENV_DEPENDENT_PATH.'system/other_common_libs';
+
+/*
  * --------------------------------------------------------------------
  * DEFAULT CONTROLLER
  * --------------------------------------------------------------------
@@ -264,6 +274,23 @@
         exit("Your GCP folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
     }
     define('GCPPATH', str_replace("\\", "/", $gcp_path));
+
+    // Other Common Libraries
+    if (realpath($other_common_libs_path) !== FALSE)
+    {
+        $other_common_libs_path = realpath($other_common_libs_path).'/';
+    }
+
+    // ensure there's a trailing slash
+    $other_common_libs_path = rtrim($other_common_libs_path, '/').'/';
+
+    // Is GCP path correct?
+    if ( ! is_dir($other_common_libs_path))
+    {
+        exit("Your Other Common Libraries folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+    }
+    define('OTHERCOMMONLIBSPATH', str_replace("\\", "/", $other_common_libs_path));
+
 
 /* End of file settings.php */
 /* Location: ./application/config/settings.php */
