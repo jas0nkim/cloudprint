@@ -8,4 +8,7 @@
     <div id="upload_box">
         <input id="fileupload" type="file" name="files[]" multiple>
     </div>
+    <select id="printer_location" name="printer_location">
+        <option value=""></option>
+    </select>
 </div>
