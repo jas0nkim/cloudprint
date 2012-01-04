@@ -42,9 +42,9 @@ $config['printer_status']['removed'] = 3;
 $config['printer_status']['error'] = 4;
 
 // locations
-$config['printer_status']['candidate'] = 0;
-$config['printer_status']['active'] = 1;
-$config['printer_status']['inactive'] = 2;
+$config['location_status']['candidate'] = 0;
+$config['location_status']['active'] = 1;
+$config['location_status']['inactive'] = 2;
 
 
 /*
