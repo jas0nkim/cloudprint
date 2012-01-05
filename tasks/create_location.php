@@ -20,7 +20,6 @@ require_once OTHERCOMMONLIBSPATH."String.php";
 
 $config = new CI_Config();
 
-// testing db class
 $db = DB();
 
 $data = array(
@@ -31,10 +30,14 @@ $data = array(
     'city' => 'North York',
     'province' => 'ON',
     'country' => 'CA',
-    'status' => $config->item('active', 'asset_status'),
+    'status' => $config->item('active', 'location_status'),
     'created_at' => date('Y-m-d H:i:s'),
 );
-$db->insert('locations', $data);
+if ($db->insert('locations', $data)) {
+    echo "[Message] A location has been inserted into database successfully\n";
+} else {
+    throw new Exception("[Error] Location cannot be inserted. Please check database error log.");
+}
 
 /*
  * ------------------------------------------------------

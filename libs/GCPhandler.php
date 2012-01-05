@@ -2,19 +2,21 @@
 
 class GCPhandler {
     private $db;
-    private $gcp_printers_db    = 'gcp_printers';   // database table name for GCP printer's information 
-    private $printers_db        = 'printers';       // database table name for general printer's information
-
     private $gcp;
 
     /**
      * construct
      *
      * @param null $gcp_options
+     * @param \CI_DB_driver $db
      * @internal param null $options
      */
-    public function __construct($gcp_options=null) {
-        $this->db = DB();
+    public function __construct($gcp_options=null, CI_DB_driver $db=null) {
+        if (is_null($db)) {
+            $this->db = DB();
+        } else {
+            $this->db = $db;
+        }
 
         $default_gcp_options = array(
              'company_name' => '',
@@ -31,7 +33,7 @@ class GCPhandler {
          try {
              $this->gcp = new GoogleCloudPrint($gcp_options);
          } catch (Exception $e) {
-             echo "Error: " . $e;
+             throw new Exception("[Error] GCPhandler : ".$e);
          }
     }
 
@@ -44,17 +46,35 @@ class GCPhandler {
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function get_jobs() {
         return json_decode($this->gcp->jobs());
     }
 
-    public function create_printer() {
+    /**
+     * @return mixed
+     */
+    public function get_printers() {
         // search printers
-        $info = json_decode($this->gcp->search());
+        return json_decode($this->gcp->search());
+    }
+
+    /**
+     * @throws Exception
+     * @param null $info stdObject
+     * @return bool
+     */
+    public function create_gcp_printers($info=null) {
+        if ($info == null) {
+            // search printers
+            $info = $this->get_printers();
+        }
 
         // create a new row if it is a new info, otherwise update an existing row.
-        if ($info->success) {
-            $this->show_message("[Message] All printers have been searched");
+        if (isset($info->success) && $info->success) {
+            $this->show_message("[Message] All GCP printers have been searched");
 
             foreach ($info->printers as $printer) {
                 if ($printer->id == '__google__docs') {
@@ -87,15 +107,21 @@ class GCPhandler {
                     $gcp_printer_model->access = json_encode($gcp_printer->access);
 
                     if ($gcp_printer_model->insert_entry()) {
-                        $this->show_message("[Message] Printer ".$printer->id." information has been inserted into database successfully");
+                        $this->show_message("[Message] GCP printer ".$printer->id." information has been inserted into database successfully");
                     } else {
-                        $this->show_message("[Error] Printer ".$printer->id." information has not been inserted into database");
+                        throw new Exception("[Error] GCPhandler::create_gcp_printers() : Printer ".$printer->id." information has not been inserted into database");
                     }
                 }
             }
         } else {
-            $this->show_message("[Error] ".$info->message);
+            if (isset($info->message)) {
+                throw new Exception("[Error] GCPhandler::create_gcp_printers() : ".$info->message);
+            } else {
+                throw new Exception("[Error] GCPhandler::create_gcp_printers() : Invalid parameter has been passed");
+            }
         }
+
+        return TRUE;
     }
 
     private function show_message($message) {
