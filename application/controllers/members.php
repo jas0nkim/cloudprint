@@ -99,9 +99,9 @@ class Members extends CI_Controller {
                                 'last_name' => $this->input->post('last_name')
                                 );
 
-            $this->load->model('user_model');
+            $this->load->model('User_model');
 
-            $result = $this->user_model->create_user($new_user_array);
+            $result = $this->User_model->create_user($new_user_array);
 
             if ($result['is_true'] == TRUE) {
                 $this->session->set_flashdata('message', '<div class="success_message">'.$result['message'].'</div>');
@@ -130,7 +130,13 @@ class Members extends CI_Controller {
     }
 
     public function print_now() {
+        $this->load->model('Printer_model');
+        $printers = $this->Printer_model->list_printers();
+
+        print_r($printers);
+
         $data['title'] = 'Print your documents now | Freeprint Authentication';
+        $data['content_data']['printers'] = $printers;
 
         $this->load->view('layouts/default', $data);
     }
@@ -158,8 +164,8 @@ class Members extends CI_Controller {
                     if (!isset($new_asset_array['error'])) {
                         if (isset($new_asset_array['delete_type'])) unset($new_asset_array['delete_type']);
                         if (isset($new_asset_array['delete_url'])) unset($new_asset_array['delete_url']);
-                        $this->load->model('asset_model');
-                        $this->asset_model->create_asset($new_asset_array);
+                        $this->load->model('Asset_model');
+                        $this->Asset_model->create_asset($new_asset_array);
                     }
                 }
                 echo Uploader::encode_json_post($info);
@@ -217,9 +223,9 @@ class Members extends CI_Controller {
     public function test_gcp_submit() {
         $this->load->model('Gcp_printer_model');
         $conditions = array('printerid' => '7189ce1f-4f61-cc02-22be-e73cf9e51954');
-        $query = $this->Gcp_printer_model->select_one_where($conditions);
+        $result = $this->Gcp_printer_model->select_one_where($conditions);
 
-        foreach ($query->result() as $row) {
+        foreach ($result as $row) {
             $gcp = $this->init_gcp();
             $printer_id = $row->printerid;
             $title = 'jason test print';

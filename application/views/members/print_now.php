@@ -8,7 +8,10 @@
     <div id="upload_box">
         <input id="fileupload" type="file" name="files[]" multiple>
     </div>
-    <select id="printer_location" name="printer_location">
-        <option value=""></option>
+    <select id="printer" name="printer">
+        <option value="">Select Printer...</option>
+        <?php foreach ($content_data['printers'] as $printer): ?>
+        <option value="<?= $printer->id ?>"><?= $printer->uuid ?></option>
+        <?php endforeach; ?>
     </select>
 </div>
