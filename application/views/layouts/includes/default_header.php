@@ -24,7 +24,7 @@
     <!-- javascript -->
     <!--[if IE]>
     <script type="text/javascript" src="/js/html5.js"></script><![endif]-->
-    <script type="text/javascript" src="/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
     <!-- jQuery v1.7 -->
     <script type="text/javascript" src="/js/scripts.js"></script>
     <!-- custom jQuery scripts/plugins -->

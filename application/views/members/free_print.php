@@ -1,6 +1,6 @@
 <!-- include css files -->
-<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-<link rel="stylesheet" href="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-image-gallery.min.css">
+<!--link rel="stylesheet" href="/css/uploader/bootstrap.css"-->
+<link rel="stylesheet" href="/css/uploader/bootstrap-image-gallery.css">
 <link rel="stylesheet" href="/css/uploader/jquery.fileupload-ui.css">
 <style type="text/css">
 .page-header {
@@ -15,17 +15,16 @@
 </style>
 
 <!-- include javascript files -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="/js/uploader/vendor/jquery.ui.widget.js"></script>
-<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
-<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+<script src="/js/uploader/tmpl.min.js"></script>
+<script src="/js/uploader/load-image.min.js"></script>
 <!-- Bootstrap Modal and Image Gallery are not required, but included for the demo -->
-<script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-modal.min.js"></script>
-<script src="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-image-gallery.min.js"></script>
+<script src="/js/uploader/bootstrap-modal.1.4.0.min.js"></script>
+<script src="/js/uploader/bootstrap-image-gallery.min.js"></script>
 <script src="/js/uploader/jquery.iframe-transport.js"></script>
 <script src="/js/uploader/jquery.fileupload.js"></script>
 <script src="/js/uploader/jquery.fileupload-ui.js"></script>
-<script src="/js/uploader/application.js"></script>
+<script src="/js/actions/print_now_fileuploader.js"></script>
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE >= 8 -->
 <script src="/js/uploader/jquery.xdr-transport.js"></script>
 <!-- postMessage Transport support can be added with the following plugin -->
