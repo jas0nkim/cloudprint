@@ -77,3 +77,4 @@ $(function () {
     $('#fileupload .files').imagegallery();
 
 });
+
