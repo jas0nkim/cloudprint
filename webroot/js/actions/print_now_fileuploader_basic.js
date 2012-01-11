@@ -6,6 +6,9 @@ $(function () {
     $('#fileupload').fileupload(
         'option',
         {
+            maxFileSize: 2097152,
+            maxNumberOfFiles: 5,
+            acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i,
             dataType: 'json',
             url: '/members/upload',
             done: function (e, data) {
