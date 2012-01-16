@@ -273,8 +273,8 @@ class Uploader {
      * @return array|null
      */
     public function get() {
-        $file_name = isset($_REQUEST['file']) ?
-            basename(stripslashes($_REQUEST['file'])) : null;
+        $file_name = isset($_GET['file']) ?
+            basename(stripslashes($_GET['file'])) : null;
         if ($file_name) {
             $info = $this->get_file_object($file_name);
         } else {
@@ -330,8 +330,8 @@ class Uploader {
      * @return bool
      */
     public function delete() {
-        $file_name = isset($_REQUEST['file']) ?
-            basename(stripslashes($_REQUEST['file'])) : null;
+        $file_name = isset($_GET['file']) ?
+            basename(stripslashes($_GET['file'])) : null;
         $file_path = $this->options['upload_dir'].$file_name;
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
         if ($success) {

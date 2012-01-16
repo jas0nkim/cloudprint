@@ -53,7 +53,7 @@ $config['location_status']['inactive'] = 2;
  * ------------------------------------------------------
  */
 // local upload config
-$config['local_upload']['delete_url'] = '';
+$config['local_upload']['delete_url'] = BASEURL . '/members/file_delete';
 $config['local_upload']['upload_dir'] = WEBROOTPATH . 'uploads/';
 $config['local_upload']['upload_url'] = BASEURL . '/uploads/';
 $config['local_upload']['param_name'] = 'files';

@@ -184,12 +184,13 @@ class Members extends CI_Controller {
      * @return void
      */
     public function file_delete() {
-        $this->load->library('uploader');
+        $options = $this->config->item('local_upload');
+        $this->load->library('uploader', $options);
         
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'DELETE':
 
-                echo "request_file: ".$_REQUEST['file']."/n/n";
+                echo "request_file: ".$_GET['file']."/n/n";
 
                 $this->uploader->delete();
                 break;
