@@ -1,5 +1,5 @@
 <!-- include css files -->
-<!--link rel="stylesheet" href="/css/uploader/bootstrap.css"-->
+<link rel="stylesheet" href="/css/uploader/bootstrap-custom.css">
 <link rel="stylesheet" href="/css/uploader/bootstrap-image-gallery.css">
 <link rel="stylesheet" href="/css/uploader/jquery.fileupload-ui.css">
 <style type="text/css">
