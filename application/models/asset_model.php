@@ -16,6 +16,7 @@ class Asset_model extends Crud {
      */
 	public function create_asset($new_asset_array) {
         $default_new_asset_array['uuid'] = String::uuid();
+        $default_new_asset_array['owner_id'] = $this->session->userdata('user_id');
         $default_new_asset_array['extension'] = get_file_extension($new_asset_array['name']);
         $default_new_asset_array['status'] = $this->config->item('temp', 'asset_status');
         $default_new_asset_array['created_at'] = date('Y-m-d H:i:s');
@@ -36,4 +37,13 @@ class Asset_model extends Crud {
 			return $data;
 		}
 	}
+
+    /**
+     * @param string $asset_uuid
+     * @param integer $owner_id
+     * @return mixed
+     */
+    public function check_asset_owner($asset_uuid, $owner_id) {
+        return $this->select_all_where(array('uuid' => $asset_uuid, 'owner_id' => $owner_id));
+    }
 }

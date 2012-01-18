@@ -171,8 +171,13 @@ class Members extends CI_Controller {
                 echo Uploader::encode_json_post($info);
                 break;
             case 'DELETE':
-                $info = $this->uploader->delete();
-                echo Uploader::encode_json_get($info);
+                $this->load->model('Asset_model');
+                if ($this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'))) {
+                    $is_deleted = $this->uploader->delete();
+                    if ($is_deleted) {
+                        $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
+                    }
+                }
                 break;
             default:
                 echo json_encode(array('success' => FALSE));
@@ -189,10 +194,13 @@ class Members extends CI_Controller {
         
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'DELETE':
-
-                echo "request_file: ".$_GET['file']."/n/n";
-
-                $this->uploader->delete();
+                $this->load->model('Asset_model');
+                if ($this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'))) {
+                    $is_deleted = $this->uploader->delete();
+                    if ($is_deleted) {
+                        $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
+                    }
+                }
                 break;
             default:
                 echo json_encode(array('success' => FALSE));

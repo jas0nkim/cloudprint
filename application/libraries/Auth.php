@@ -34,7 +34,7 @@ class Auth {
 
 			$session_data =	array(
 
-							'user_id' => $qr->user_id,
+							'user_id' => $qr->id,
 
 							'username' => $qr->username,
 
@@ -674,7 +674,7 @@ class Auth {
 
 
 
-				$result_update = $this->CI->user_model->update_user($qr->user_id, $updated_user);
+				$result_update = $this->CI->user_model->update_user($qr->id, $updated_user);
 
 				if ($result_update['is_true'] == TRUE) {
 

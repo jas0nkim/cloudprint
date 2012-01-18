@@ -147,7 +147,7 @@ class User_model extends Crud {
 			return $data;
 		} else {
 			$data['is_true'] = FALSE;
-			$data['message'] = 'Failed to update usesr.';
+			$data['message'] = 'Failed to update user.';
 			return $data;
 		}
 	}

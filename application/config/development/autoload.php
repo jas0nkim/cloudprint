@@ -117,7 +117,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('crud/crud', 'crud/crud_timestampable');
+$autoload['model'] = array('crud/crud');
 
 
 /* End of file autoload.php */

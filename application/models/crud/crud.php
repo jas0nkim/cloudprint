@@ -200,4 +200,22 @@ class Crud extends CI_Model {
         }
         return $this->db->update($this->table, $data, array('id' => $this_id));
     }
+
+    /**
+     * delete entry
+     *
+     * @param array|string $data
+     * @return bool
+     */
+    public function delete_entry($data=null) {
+        if (is_null($data)) {
+            return FALSE;
+        }
+
+        if (!is_array($data)) { // $data is primary key
+            return $this->db->delete($this->table, array('id' => $data));
+        } else { // $data is associated array
+            return $this->db->delete($this->table, $data);
+        }
+    }
 }
