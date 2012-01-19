@@ -56,6 +56,23 @@
         </div>
     </form>
 
+    <form id="freeprint" action="/members/submit_print_job" method="POST">
+        <div id="upfiles">
+            <input type="hidden" name="uploadedfiles" id="uploadedfiles" value="" />
+        </div>
+        <div id="selectprinter">
+            <select id="printer" name="printer">
+                <option value="">Select Printer...</option>
+                <?php foreach ($content_data['printers'] as $printer): ?>
+                <option value="<?= $printer->id ?>"><?= $printer->uuid ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div id="submitprintjob">
+            <input type="submit" name="submit" value="Print" />
+        </div>
+    </form>
+
     <!-- gallery-loader is the loading animation container -->
     <div id="gallery-loader"></div>
     <!-- gallery-modal is the modal dialog used for the image gallery -->

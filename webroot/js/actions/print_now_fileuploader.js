@@ -12,6 +12,19 @@
 /*jslint nomen: true, unparam: true, regexp: true */
 /*global $, window, document */
 
+Array.prototype.findIndex = function(value){
+    var ctr = "";
+    for (var i=0; i < this.length; i++) {
+        // use === to check for Matches. ie., identical (===), ;
+        if (this[i] == value) {
+            return i;
+        }
+    }
+    return ctr;
+};
+
+var uploadedfiles = new Array();
+
 $(function () {
     'use strict';
 
@@ -22,6 +35,15 @@ $(function () {
         maxNumberOfFiles: 5,
         maxFileSize: 2097152,
         acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i
+        /*
+        done: function (e, data) {
+            for (var i=0; i<data.result.length; i++) {
+                uploadedfiles.push(data.result[i].uuid);
+            }
+            $('input#uploadedfiles').val(uploadedfiles.toString());
+            return this.done;
+        }
+        */
     });
 
     // Enable iframe cross-domain access via redirect page:
@@ -29,6 +51,8 @@ $(function () {
         /\/[^\/]*$/,
         '/result.html?%s'
     );
+
+    // callback: 'send'
     $('#fileupload').bind('fileuploadsend', function (e, data) {
         if (data.dataType.substr(0, 6) === 'iframe') {
             var target = $('<a/>').prop('href', data.url)[0];
@@ -40,7 +64,19 @@ $(function () {
             }
         }
     });
-
+/*
+    // callback: 'done' - after uploading a file successfully
+    $('#fileupload').bind('fileuploaddone', function (e, data) {
+        alert(data.result);
+        alert(data.textStatus);
+        alert(data.jqXHR);
+    });
+*/
+/*
+    // callback: 'destroy' - after deleting a file
+    $('#fileupload').bind('fileuploaddestroy', function (e, data) {
+    });
+*/
     // Open download dialogs via iframes,
     // to prevent aborting current uploads:
     $('#fileupload .files').delegate(
