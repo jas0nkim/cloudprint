@@ -35,15 +35,6 @@ $(function () {
         maxNumberOfFiles: 5,
         maxFileSize: 2097152,
         acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i
-        /*
-        done: function (e, data) {
-            for (var i=0; i<data.result.length; i++) {
-                uploadedfiles.push(data.result[i].uuid);
-            }
-            $('input#uploadedfiles').val(uploadedfiles.toString());
-            return this.done;
-        }
-        */
     });
 
     // Enable iframe cross-domain access via redirect page:
@@ -63,15 +54,13 @@ $(function () {
                 });
             }
         }
+    }).bind('fileuploaddone', function (e, data) {
+        for (var i=0, files=data.result, l=files.length, file=files[0]; i<l; file=files[++i]) {
+            uploadedfiles.push(file.uuid);
+        }
+        $('div#upfiles').html(tmpl("template-uploaded-filename", uploadedfiles.toString()));
     });
-/*
-    // callback: 'done' - after uploading a file successfully
-    $('#fileupload').bind('fileuploaddone', function (e, data) {
-        alert(data.result);
-        alert(data.textStatus);
-        alert(data.jqXHR);
-    });
-*/
+
 /*
     // callback: 'destroy' - after deleting a file
     $('#fileupload').bind('fileuploaddestroy', function (e, data) {

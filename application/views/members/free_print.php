@@ -57,9 +57,7 @@
     </form>
 
     <form id="freeprint" action="/members/submit_print_job" method="POST">
-        <div id="upfiles">
-            <input type="hidden" name="uploadedfiles" id="uploadedfiles" value="" />
-        </div>
+        <div id="upfiles"></div>
         <div id="selectprinter">
             <select id="printer" name="printer">
                 <option value="">Select Printer...</option>
@@ -142,4 +140,7 @@
     {% } %}
     </script>
 
+    <script id="template-uploaded-filename" type="text/html">
+        <input type="hidden" name="uploadedfiles" id="uploadedfiles" value="{%=o%}" />
+    </script>
 </div>
