@@ -37,7 +37,7 @@
     <form id="fileupload" action="/members/upload" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="span16 fileupload-buttonbar">
-                <div class="progressbar fileupload-progressbar"><div style="width:0%;"></div></div>
+                <!--div class="progressbar fileupload-progressbar"><div style="width:0%;"></div></div-->
                 <span class="btn success fileinput-button">
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
@@ -105,7 +105,7 @@
             {% if (file.error) { %}
                 <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
             {% } else if (o.files.valid && !i) { %}
-                <td class="progress"><div class="progressbar"><div style="width:0%;"></div></div></td>
+                <td class="progress"><!--div class="progressbar"><div style="width:0%;"></div></div--></td>
                 <td class="start">{% if (!o.options.autoUpload) { %}<button class="btn primary">Start</button>{% } %}</td>
             {% } else { %}
                 <td colspan="2"></td>

@@ -25,6 +25,19 @@ Array.prototype.findIndex = function(value){
 
 var uploadedfiles = new Array();
 
+$.widget('blueimpUIX.fileupload', $.blueimpUI.fileupload, {
+    options: {
+        // Override the callback for upload progress events:
+        progress: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10) + '%'
+        },
+        // Override the callback for global upload progress events:
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10) + '%'
+        }
+    }
+});
+
 $(function () {
     'use strict';
 
@@ -34,7 +47,7 @@ $(function () {
     $('#fileupload').fileupload('option', {
         maxNumberOfFiles: 5,
         maxFileSize: 2097152,
-        acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i
+        acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i,
     });
 
     // Enable iframe cross-domain access via redirect page:
