@@ -59,13 +59,13 @@ $(function () {
             uploadedfiles.push(file.uuid);
         }
         $('div#upfiles').html(tmpl("template-uploaded-filename", uploadedfiles.toString()));
+    }).bind('fileuploaddestroy', function (e, data) {
+        var urlStr = data.url, strSearch = "?file=", delUUID='';
+        delUUID = urlStr.substring(urlStr.indexOf(strSearch)+strSearch.length);
+        uploadedfiles.splice(uploadedfiles.findIndex(delUUID), 1);
+        $('div#upfiles').html(tmpl("template-uploaded-filename", uploadedfiles.toString()));
     });
 
-/*
-    // callback: 'destroy' - after deleting a file
-    $('#fileupload').bind('fileuploaddestroy', function (e, data) {
-    });
-*/
     // Open download dialogs via iframes,
     // to prevent aborting current uploads:
     $('#fileupload .files').delegate(

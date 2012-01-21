@@ -166,6 +166,7 @@ class Members extends CI_Controller {
                     $is_deleted = $this->uploader->delete();
                     if ($is_deleted) {
                         $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
+                        echo Uploader::encode_json_get(array('uuid' => $_GET['file']));
                     }
                 }
                 break;
@@ -189,6 +190,7 @@ class Members extends CI_Controller {
                     $is_deleted = $this->uploader->delete();
                     if ($is_deleted) {
                         $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
+                        echo Uploader::encode_json_get(array('uuid' => $_GET['file']));
                     }
                 }
                 break;
