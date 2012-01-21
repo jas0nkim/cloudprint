@@ -47,7 +47,7 @@ $(function () {
     $('#fileupload').fileupload('option', {
         maxNumberOfFiles: 5,
         maxFileSize: 2097152,
-        acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i,
+        acceptFileTypes: /(\.|\/)(jpe?g|png|pdf|docx?)$/i
     });
 
     // Enable iframe cross-domain access via redirect page:
