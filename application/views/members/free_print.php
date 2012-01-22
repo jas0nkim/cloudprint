@@ -39,7 +39,7 @@
             <div class="span16 fileupload-buttonbar">
                 <!--div class="progressbar fileupload-progressbar"><div style="width:0%;"></div></div-->
                 <span class="btn success fileinput-button">
-                    <span>Add files...</span>
+                    <span class="font-button">Add files...</span>
                     <input type="file" name="files[]" multiple>
                 </span>
                 <button type="submit" class="btn primary start">Start upload</button>
