@@ -4,6 +4,7 @@
 set_include_path(get_include_path() . PATH_SEPARATOR . ZENDPATH);
 
 require_once 'Zend/Loader.php';
+require_once 'gcp_utility.php';
 
 Zend_Loader::loadClass('Zend_Http_Client');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
@@ -285,6 +286,28 @@ class GoogleCloudPrint {
         }
         return $value;
     }
+
+    /**
+     * @param $printer_id
+     * @param $capabilities
+     * @param $file_path
+     * @param $content_type
+     */
+    public function simple_submit($printer_id, $capabilities, $file_path, $content_type) {
+        if (preg_match('/pdf$/i', $content_type)) {
+            $b64_file = base64_encode($file_path);
+            $fdata = GCP_utility::read_file($file_path);
+
+        } elseif (preg_match('/png$/i', $content_type) || preg_match('/jpe?g$/i', $content_type)) {
+            $fdata = GCP_utility::read_file($file_path);
+
+        } else {
+            $fdata = null;
+        }
+
+        $title = "FREEPRINT - ".$file_path." - ".date('Y-m-d H:i:s');
+
+    }
 }
 
-/* End of file Gcphandler.php */
+/* End of file gcp.sdk.php */
