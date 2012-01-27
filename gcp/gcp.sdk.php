@@ -296,8 +296,8 @@ class GoogleCloudPrint {
      */
     public function simple_submit($printer_id, $capabilities, $file_path, $content_type) {
         if (preg_match('/application\/pdf$/i', $content_type)) {
-            $b64_file = base64_encode($file_path);
-            $content = GCP_utility::read_file($file_path);
+            $b64_file_path = base64_encode($file_path);
+            $content = GCP_utility::read_file($b64_file_path);
 
         } elseif (preg_match('/image\/(jpeg|png)$/i', $content_type)) {
             $content = GCP_utility::read_file($file_path);
