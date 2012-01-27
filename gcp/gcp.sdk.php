@@ -292,21 +292,23 @@ class GoogleCloudPrint {
      * @param $capabilities
      * @param $file_path
      * @param $content_type
+     * @return mixed
      */
     public function simple_submit($printer_id, $capabilities, $file_path, $content_type) {
         if (preg_match('/pdf$/i', $content_type)) {
             $b64_file = base64_encode($file_path);
-            $fdata = GCP_utility::read_file($file_path);
+            $content = GCP_utility::read_file($file_path);
 
         } elseif (preg_match('/png$/i', $content_type) || preg_match('/jpe?g$/i', $content_type)) {
-            $fdata = GCP_utility::read_file($file_path);
+            $content = GCP_utility::read_file($file_path);
 
         } else {
-            $fdata = null;
+            $content = null;
         }
 
-        $title = "FREEPRINT - ".$file_path." - ".date('Y-m-d H:i:s');
-
+        $title = "FREEPRINT - ".basename($file_path)." - ".date('Y-m-d H:i:s');
+        $tag = null;
+        return $this->submit($printer_id, $title, $capabilities, $content, $content_type, $tag);
     }
 }
 
