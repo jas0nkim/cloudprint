@@ -125,20 +125,24 @@ class Crud extends CI_Model {
      * select a record with given primary key
      *
      * @param mixed $primary_key
-     * @return object
+     * @param string $result_type 'object' or 'array'
+     * @return array
      */
-    public function select_one($primary_key) {
-        return $this->db->get_where($this->table, array('id' => $primary_key), 1, 0);
+    public function select_one($primary_key, $result_type='object') {
+        $query = $this->db->get_where($this->table, array('id' => $primary_key), 1, 0);
+        return $this->get_result($query, $result_type);
     }
 
     /**
      * select a record with given field name and value
      *
      * @param array $conditions : $field => $value pairs
-     * @return object
+     * @param string $result_type 'object' or 'array'
+     * @return array
      */
-    public function select_one_where($conditions) {
-        return $this->db->get_where($this->table, $conditions, 1, 0);
+    public function select_one_where($conditions, $result_type='object') {
+        $query = $this->db->get_where($this->table, $conditions, 1, 0);
+        return $this->get_result($query, $result_type);
     }
 
     /**

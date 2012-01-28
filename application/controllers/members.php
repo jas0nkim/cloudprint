@@ -203,11 +203,35 @@ class Members extends CI_Controller {
      *
      */
     public function submit_print_job() {
+        $gcp = $this->init_gcp();
         $this->load->model('Gcp_printer_model');
-        if ($this->Gcp_printer_model->select_one_where(array('printer_id' => $_POST['printer']))) {
-            // need to work more here
+        $result = $this->Gcp_printer_model->select_one_where(array('printer_id' => $_POST['printer']));
+        $gcp_printer = $result[0];
+        $uploaded_files = explode(",", $_POST['uploadedfiles']);
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+        foreach ($uploaded_files as $uploaded_file) {
+            $file_path = $this->config->item('upload_dir', 'local_upload') . $uploaded_file;
+            $content_type = finfo_file($finfo, $file_path);
+
+            echo $gcp->simple_submit($gcp_printer->printerid, $gcp_printer->capabilities, $file_path, $content_type);
         }
+        finfo_close($finfo);
     }
+
+    /**
+     * @return GoogleCloudPrint
+     */
+    private function init_gcp() {
+        $options = array(
+            'company_name' => $this->config->item('company_name'),
+            'email' => $this->config->item('email', 'gcp'),
+            'password' => $this->config->item('password', 'gcp')
+        );
+        require_once GCPPATH . 'gcp.sdk.php';
+        return new GoogleCloudPrint($options);
+    }
+
 
 /**
  * -----------------------------------------------------------------------------------
@@ -246,19 +270,6 @@ class Members extends CI_Controller {
             $tag = '';
             echo $gcp->submit($printer_id, $title, $capabilities, $content, $content_type, $tag);
         }
-    }
-
-    /**
-     * @return GoogleCloudPrint
-     */
-    private function init_gcp() {
-        $options = array(
-            'company_name' => $this->config->item('company_name'),
-            'email' => $this->config->item('email', 'gcp'),
-            'password' => $this->config->item('password', 'gcp')
-        );
-        require_once GCPPATH . 'gcp.sdk.php';
-        return new GoogleCloudPrint($options);
     }
 
 /**
