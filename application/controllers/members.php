@@ -199,6 +199,16 @@ class Members extends CI_Controller {
         }
     }
 
+    /**
+     *
+     */
+    public function submit_print_job() {
+        $this->load->model('Gcp_printer_model');
+        if ($this->Gcp_printer_model->select_one_where(array('printer_id' => $_POST['printer']))) {
+            // need to work more here
+        }
+    }
+
 /**
  * -----------------------------------------------------------------------------------
  * Test GCP Interfaces
