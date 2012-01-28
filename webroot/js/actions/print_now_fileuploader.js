@@ -69,7 +69,9 @@ $(function () {
         }
     }).bind('fileuploaddone', function (e, data) {
         for (var i=0, files=data.result, l=files.length, file=files[0]; i<l; file=files[++i]) {
-            uploadedfiles.push(file.uuid);
+            if (file.error == undefined) {
+                uploadedfiles.push(file.uuid);
+            }
         }
         $('div#upfiles').html(tmpl("template-uploaded-filename", uploadedfiles.toString()));
     }).bind('fileuploaddestroy', function (e, data) {
