@@ -294,16 +294,17 @@ class GoogleCloudPrint {
      * @param $content_type
      * @return mixed
      */
-    public function simple_submit($printer_id, $capabilities, $file_path, $content_type) {
+    public function simple_submit($printer_id, $capabilities, $file_path, $content_type='url') {
         if (preg_match('/application\/pdf$/i', $content_type)) {
             $b64_file_path = GCP_utility::base_64_encode($file_path);
             $content = GCP_utility::read_file($b64_file_path);
+            $content_type = 'dataUrl';
 
         } elseif (preg_match('/image\/(jpeg|png)$/i', $content_type)) {
             $content = GCP_utility::read_file($file_path);
 
-        } else {
-            $content = null;
+        } else { // content type = url
+            $content = urlencode($file_path);
         }
 
         $title = "FREEPRINT - ".basename($file_path)." - ".date('Y-m-d H:i:s');

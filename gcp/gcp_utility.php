@@ -10,13 +10,7 @@ class GCP_utility {
      * @return null | string
      */
     public static function read_file($file_path) {
-        $contents = null;
-        $handle = fopen($file_path, "rb");
-        if ($handle) {
-            $contents = fread($handle, filesize($file_path));
-            fclose($handle);
-        }
-        return $contents;
+        return file_get_contents($file_path);
     }
 
     /**
