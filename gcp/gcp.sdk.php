@@ -295,13 +295,10 @@ class GoogleCloudPrint {
      * @return mixed
      */
     public function simple_submit($printer_id, $capabilities, $file_path, $content_type='url') {
-        if (preg_match('/application\/pdf$/i', $content_type)) {
+        if (preg_match('/image\/(jpeg|png)|application\/pdf$/i', $content_type)) {
             $b64_file_path = GCP_utility::base_64_encode($file_path);
             $content = GCP_utility::read_file($b64_file_path);
             $content_type = 'dataUrl';
-
-        } elseif (preg_match('/image\/(jpeg|png)$/i', $content_type)) {
-            $content = GCP_utility::read_file($file_path);
 
         } else { // content type = url
             $content = urlencode($file_path);
