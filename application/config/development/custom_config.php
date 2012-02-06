@@ -66,6 +66,17 @@ $config['local_upload']['max_number_of_files'] = null;
 $config['local_upload']['discard_aborted_uploads'] = TRUE;
 $config['local_upload']['image_versions'] = array();
 
+/*
+ * ------------------------------------------------------
+ *  File conversion - .doc(x) to .pdf
+ * ------------------------------------------------------
+ */
+$config['local_file_conv']['convert_file_mime_types'] = '/application\/(msword|vnd\.openxmlformats\-officedocument\.wordprocessingml\.document)/i';
+$config['local_file_conv']['unoconv_path'] = '/usr/bin/unoconv';
+$config['local_file_conv']['original_dir'] = WEBROOTPATH . 'uploads/';
+$config['local_file_conv']['converted_dir'] = WEBROOTPATH . 'uploads/docs_to_pdfs/';
+$config['local_file_conv']['apache_home'] = '/home/www-data';
+
 
 // GCP
 $config['gcp']['email'] = 'fpdev2012@gmail.com';

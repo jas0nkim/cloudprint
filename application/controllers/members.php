@@ -214,9 +214,36 @@ class Members extends CI_Controller {
             $file_path = $this->config->item('upload_dir', 'local_upload') . $uploaded_file;
             $content_type = finfo_file($finfo, $file_path);
 
+            if (($converted_file_path = $this->check_convertable_file($uploaded_file, $content_type)) !== FALSE) {
+                $file_path = $converted_file_path;
+            }
+
             echo $gcp->simple_submit($gcp_printer->printerid, $gcp_printer->capabilities, $file_path, $content_type);
         }
         finfo_close($finfo);
+    }
+
+    /**
+     * @param string $file_name
+     * @param $content_type
+     * @return bool | string converted file path
+     */
+    private function check_convertable_file($file_name, $content_type) {
+        if (!preg_match($this->config->item('convert_file_mime_types', 'local_file_conv'), $content_type)) {
+            return FALSE;
+        } else {
+            $config['doc_file_name'] = $file_name;
+            $config = array_replace_recursive($config, $this->config->item('local_file_conv'));
+
+            try {
+                $this->load->library('fileconvertor', $config);
+                return $this->fileconvertor->convert_doc_to_pdf();
+
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+                return FALSE;
+            }
+        }
     }
 
     /**
