@@ -12,11 +12,7 @@ class Fileconvertor {
     );
     // variable set if the constuctor loaded correctly.
     private $pass = false;
-
     private $config;
-    // store the file name from constuctor reference
-    private $file_name;
-    private $tmp_file_name;
 
     /**
      * Enter description here...
@@ -25,11 +21,11 @@ class Fileconvertor {
      */
     public function __construct($config=null) {
         $this->config = array(
-            'doc_file_name' => '',
+            'doc_file_name' => 'default.doc',
+            'pdf_file_name' => 'default.pdf',
             'unoconv_path' => '/usr/bin/unoconv',
             'original_dir' => '/uploads/',
             'converted_dir' => '/uploads/docs_to_pdfs/',
-            'tmp_converted_dir' => '/uploads/docs_to_pdfs/tmp/',
             'apache_home' => '/home/www-data',
             'convert_file_mime_types' => '/application\/(msword|vnd\.openxmlformats\-officedocument\.wordprocessingml\.document)/i'
         );
@@ -46,7 +42,7 @@ class Fileconvertor {
         finfo_close($finfo);
 
         if (preg_match($this->config['convert_file_mime_types'], $content_type)) {
-            $this->file_name = $this->config['doc_file_name'];
+            //$this->file_name = $this->config['doc_file_name'];
             $this->pass = TRUE;
         } else {
             $this->pass = FALSE;
@@ -63,7 +59,7 @@ class Fileconvertor {
     public function convert_doc_to_pdf() {
         //$command = $this->config['unoconv_path'];
         $command = 'unoconv';
-        $args = ' --stdout -f pdf ' . $this->config['original_dir'] . $this->file_name;
+        $args = ' --stdout -f pdf ' . $this->config['original_dir'] . $this->config['doc_file_name'];
 
         $run = $command . $args;
 
@@ -86,22 +82,21 @@ class Fileconvertor {
         }
 
         // file saved
-        if(!$this->_create_and_save($start_of_file, $this->config['converted_dir'], $this->file_name)){
+        if(!$this->_create_and_save($start_of_file, $this->config['converted_dir'], $this->config['pdf_file_name'])){
             throw new Exception('Error Saving The PDF');
         }
 
-        return $this->config['converted_dir'] . $this->file_name;
+        return $this->config['converted_dir'] . $this->config['pdf_file_name'];
     }
 
     /**
-     * whether file extension has been included or not
+     * @return string
      */
-    private function _check_extension() {
-
-    }
-
-    private function _create_tmp_file() {
-
+    public function get_converted_content_type() {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+        $content_type = finfo_file($finfo, $this->config['converted_dir'] . $this->config['pdf_file_name']);
+        finfo_close($finfo);
+        return $content_type;
     }
 
     /**

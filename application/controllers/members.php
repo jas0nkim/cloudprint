@@ -206,26 +206,36 @@ class Members extends CI_Controller {
 
     /**
      *
+     * @return bool
      */
     public function submit_print_job() {
         $gcp = $this->init_gcp();
         $this->load->model('Gcp_printer_model');
         $result = $this->Gcp_printer_model->select_one_where(array('printer_id' => $_POST['printer']));
         $gcp_printer = $result[0];
-        $uploaded_files = explode(",", $_POST['uploadedfiles']);
+        $uploaded_uuids = explode(",", $_POST['uploadedfiles']);
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-        foreach ($uploaded_files as $uploaded_file) {
+        $this->load->model('Asset_model');
+        foreach ($uploaded_uuids as $uploaded_uuid) {
+            $asset_info = $this->Asset_model->check_asset_owner($uploaded_uuid, $this->session->userdata('user_id'));
+            if (!$asset_info) {
+                return FALSE;
+            }
+            $asset_info = $asset_info[0];
+            $uploaded_file = $asset_info->stored_name;
             $file_path = $this->config->item('upload_dir', 'local_upload') . $uploaded_file;
             $content_type = finfo_file($finfo, $file_path);
 
-            if (($converted_file_path = $this->check_convertable_file($uploaded_file, $content_type)) !== FALSE) {
-                $file_path = $converted_file_path;
+            if (($converted_file = $this->check_convertable_file($uploaded_file, $content_type)) !== FALSE) {
+                $file_path = $converted_file->path;
+                $content_type = $converted_file->content_type;
             }
 
             echo $gcp->simple_submit($gcp_printer->printerid, $gcp_printer->capabilities, $file_path, $content_type);
         }
         finfo_close($finfo);
+        return TRUE;
     }
 
     /**
@@ -237,12 +247,17 @@ class Members extends CI_Controller {
         if (!preg_match($this->config->item('convert_file_mime_types', 'local_file_conv'), $content_type)) {
             return FALSE;
         } else {
+            $part_file_name = pathinfo($file_name);
             $config['doc_file_name'] = $file_name;
+            $config['pdf_file_name'] = $part_file_name['filename'].'.pdf';
             $config = array_replace_recursive($config, $this->config->item('local_file_conv'));
 
             try {
                 $this->load->library('fileconvertor', $config);
-                return $this->fileconvertor->convert_doc_to_pdf();
+                $ret = new stdClass();
+                $ret->path = $this->fileconvertor->convert_doc_to_pdf();
+                $ret->content_type = $this->fileconvertor->get_converted_content_type();
+                return $ret;
 
             } catch (Exception $e) {
                 error_log($e->getMessage());
