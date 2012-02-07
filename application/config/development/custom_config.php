@@ -75,6 +75,7 @@ $config['local_file_conv']['convert_file_mime_types'] = '/application\/(msword|v
 $config['local_file_conv']['unoconv_path'] = '/usr/bin/unoconv';
 $config['local_file_conv']['original_dir'] = WEBROOTPATH . 'uploads/';
 $config['local_file_conv']['converted_dir'] = WEBROOTPATH . 'uploads/docs_to_pdfs/';
+$config['local_file_conv']['tmp_converted_dir'] = WEBROOTPATH . 'uploads/docs_to_pdfs/tmp/';
 $config['local_file_conv']['apache_home'] = '/home/www-data';
 
 

@@ -16,6 +16,7 @@ class Fileconvertor {
     private $config;
     // store the file name from constuctor reference
     private $file_name;
+    private $tmp_file_name;
 
     /**
      * Enter description here...
@@ -28,6 +29,7 @@ class Fileconvertor {
             'unoconv_path' => '/usr/bin/unoconv',
             'original_dir' => '/uploads/',
             'converted_dir' => '/uploads/docs_to_pdfs/',
+            'tmp_converted_dir' => '/uploads/docs_to_pdfs/tmp/',
             'apache_home' => '/home/www-data',
             'convert_file_mime_types' => '/application\/(msword|vnd\.openxmlformats\-officedocument\.wordprocessingml\.document)/i'
         );
@@ -59,15 +61,21 @@ class Fileconvertor {
      * @return string
      */
     public function convert_doc_to_pdf() {
-        $command = $this->config['unoconv_path'];
-        $args = ' --server localhost --port 2002 --stdout -f pdf ' . $this->config['original_dir'] . $this->file_name;
+        //$command = $this->config['unoconv_path'];
+        $command = 'unoconv';
+        $args = ' --stdout -f pdf ' . $this->config['original_dir'] . $this->file_name;
 
         $run = $command . $args;
 
+        error_log($run);
+
         //echo $run; die;
         $pdf = shell_exec($run);
-        $end_of_line = strpos($pdf, "\n");
-        $start_of_file = substr($pdf, 0, $end_of_line);
+        $end_of_line = strpos($pdf, "%EOF");
+        $start_of_file = substr($pdf, 0, $end_of_line + 4);
+
+        error_log($end_of_line);
+        error_log($start_of_file);
 
         if (!preg_match("/%PDF/i", $start_of_file)) {
             throw new Exception('Error Generating the PDF file');
@@ -78,11 +86,22 @@ class Fileconvertor {
         }
 
         // file saved
-        if(!$this->_create_and_save($pdf, $this->config['converted_dir'], $this->file_name)){
+        if(!$this->_create_and_save($start_of_file, $this->config['converted_dir'], $this->file_name)){
             throw new Exception('Error Saving The PDF');
         }
 
         return $this->config['converted_dir'] . $this->file_name;
+    }
+
+    /**
+     * whether file extension has been included or not
+     */
+    private function _check_extension() {
+
+    }
+
+    private function _create_tmp_file() {
+
     }
 
     /**
