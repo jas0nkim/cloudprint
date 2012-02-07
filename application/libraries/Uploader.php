@@ -329,13 +329,12 @@ class Uploader {
     }
 
     /**
+     * @param string $file_name
      * @return bool
      */
-    public function delete($file_url) {
-        error_log($file_url);
-
-        $file_name = isset($file_url) ?
-            basename(stripslashes($file_url)) : null;
+    public function delete($file_name) {
+        $file_name = isset($file_name) ?
+            basename(stripslashes($file_name)) : null;
         $file_path = $this->options['upload_dir'].$file_name;
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
         if ($success) {

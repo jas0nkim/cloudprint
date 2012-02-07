@@ -154,6 +154,7 @@ class Members extends CI_Controller {
                     if (!isset($new_asset_array['error'])) {
                         if (isset($new_asset_array['delete_type'])) unset($new_asset_array['delete_type']);
                         if (isset($new_asset_array['delete_url'])) unset($new_asset_array['delete_url']);
+                        $new_asset_array['stored_name'] = basename($new_asset_array['url']);
                         $this->load->model('Asset_model');
                         $this->Asset_model->create_asset($new_asset_array);
                     }
@@ -164,7 +165,8 @@ class Members extends CI_Controller {
                 $this->load->model('Asset_model');
                 $asset_info = $this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'));
                 if ($asset_info) {
-                    $is_deleted = $this->uploader->delete($asset_info[0]['url']);
+                    $asset_info = $asset_info[0];
+                    $is_deleted = $this->uploader->delete($asset_info->stored_name);
                     if ($is_deleted) {
                         $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
                         echo Uploader::encode_json_get(array('uuid' => $_GET['file']));
@@ -190,7 +192,7 @@ class Members extends CI_Controller {
                 $asset_info = $this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'));
                 if ($asset_info) {
                     $asset_info = $asset_info[0];
-                    $is_deleted = $this->uploader->delete($asset_info->url);
+                    $is_deleted = $this->uploader->delete($asset_info->stored_name);
                     if ($is_deleted) {
                         $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
                         echo Uploader::encode_json_get(array('uuid' => $_GET['file']));
