@@ -64,16 +64,17 @@ class Uploader {
      */
     protected function get_file_object($file_name) {
         $file_path = $this->options['upload_dir'].$file_name;
+        $part_file_path = pathinfo($file_path);
         if (is_file($file_path) && $file_name[0] !== '.') {
             $file = array();
             $file['uuid'] = $this->options['uuid'];
             $file['name'] = $file_name;
             $file['size'] = filesize($file_path);
-            $file['url'] = $this->options['upload_url'].rawurlencode($file['uuid']);
+            $file['url'] = $this->options['upload_url'].rawurlencode($file['uuid'].'.'.strtolower($part_file_path['extension']));
             foreach($this->options['image_versions'] as $version => $options) {
-                if (is_file($options['upload_dir'].$file_name)) {
+                if (is_file($options['upload_dir'].rawurlencode($file['uuid']))) {
                     $file[$version.'_url'] = $options['upload_url']
-                        .rawurlencode($file['uuid']);
+                        .rawurlencode($file['uuid'].'.'.strtolower($part_file_path['extension']));
                 }
             }
             $file['delete_url'] = $this->options['delete_url'].'?file='.rawurlencode($file['uuid']);
@@ -220,11 +221,12 @@ class Uploader {
         $file = array();
         $file['uuid'] = $this->options['uuid'];
         $file['name'] = $this->trim_file_name($name, $type);
+        $part_file_path = pathinfo($name);
         $file['size'] = intval($size);
         $file['type'] = $type;
         $error = $this->has_error($uploaded_file, $file, $error);
         if (!$error && $file['name']) {
-            $file_path = $this->options['upload_dir'].$file['uuid'];
+            $file_path = $this->options['upload_dir'].$file['uuid'].'.'.$part_file_path['extension'];
             $append_file = !$this->options['discard_aborted_uploads'] &&
                 is_file($file_path) && $file['size'] > filesize($file_path);
             clearstatcache();
@@ -249,11 +251,11 @@ class Uploader {
             }
             $file_size = filesize($file_path);
             if ($file_size === $file['size']) {
-                $file['url'] = $this->options['upload_url'].rawurlencode($file['uuid']);
+                $file['url'] = $this->options['upload_url'].rawurlencode($file['uuid'].'.'.$part_file_path['extension']);
                 foreach($this->options['image_versions'] as $version => $options) {
                     if ($this->create_scaled_image($file['name'], $options)) {
                         $file[$version.'_url'] = $options['upload_url']
-                            .rawurlencode($file['uuid']);
+                            .rawurlencode($file['uuid'].'.'.$part_file_path['extension']);
                     }
                 }
             } elseif ($this->options['discard_aborted_uploads']) {
@@ -329,9 +331,11 @@ class Uploader {
     /**
      * @return bool
      */
-    public function delete() {
-        $file_name = isset($_GET['file']) ?
-            basename(stripslashes($_GET['file'])) : null;
+    public function delete($file_url) {
+        error_log($file_url);
+
+        $file_name = isset($file_url) ?
+            basename(stripslashes($file_url)) : null;
         $file_path = $this->options['upload_dir'].$file_name;
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
         if ($success) {

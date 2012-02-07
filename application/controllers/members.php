@@ -162,8 +162,9 @@ class Members extends CI_Controller {
                 break;
             case 'DELETE':
                 $this->load->model('Asset_model');
-                if ($this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'))) {
-                    $is_deleted = $this->uploader->delete();
+                $asset_info = $this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'));
+                if ($asset_info) {
+                    $is_deleted = $this->uploader->delete($asset_info[0]['url']);
                     if ($is_deleted) {
                         $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
                         echo Uploader::encode_json_get(array('uuid' => $_GET['file']));
@@ -186,8 +187,10 @@ class Members extends CI_Controller {
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'DELETE':
                 $this->load->model('Asset_model');
-                if ($this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'))) {
-                    $is_deleted = $this->uploader->delete();
+                $asset_info = $this->Asset_model->check_asset_owner($_GET['file'], $this->session->userdata('user_id'));
+                if ($asset_info) {
+                    $asset_info = $asset_info[0];
+                    $is_deleted = $this->uploader->delete($asset_info->url);
                     if ($is_deleted) {
                         $this->Asset_model->delete_entry(array('uuid' => $_GET['file'], 'owner_id' => $this->session->userdata('user_id'))); // have to enter owner_id here
                         echo Uploader::encode_json_get(array('uuid' => $_GET['file']));
