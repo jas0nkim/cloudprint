@@ -232,7 +232,10 @@ class Members extends CI_Controller {
                 $content_type = $converted_file->content_type;
             }
 
-            echo $gcp->simple_submit($gcp_printer->printerid, $gcp_printer->capabilities, $file_path, $content_type);
+            // check number of pages
+            echo "page numbers: ".$this->count_page_numbers($file_path);
+
+            //echo $gcp->simple_submit($gcp_printer->printerid, $gcp_printer->capabilities, $file_path, $content_type);
         }
         finfo_close($finfo);
         return TRUE;
@@ -264,6 +267,10 @@ class Members extends CI_Controller {
                 return FALSE;
             }
         }
+    }
+
+    private function count_page_numbers($file_path) {
+        return shell_exec("identify -format %n ".$file_path);
     }
 
     /**
