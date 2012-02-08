@@ -63,15 +63,10 @@ class Fileconvertor {
 
         $run = $command . $args;
 
-        error_log($run);
-
         //echo $run; die;
         $pdf = shell_exec($run);
         $end_of_line = strpos($pdf, "%EOF");
         $start_of_file = substr($pdf, 0, $end_of_line + 4);
-
-        error_log($end_of_line);
-        error_log($start_of_file);
 
         if (!preg_match("/%PDF/i", $start_of_file)) {
             throw new Exception('Error Generating the PDF file');
