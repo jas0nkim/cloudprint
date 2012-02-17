@@ -347,25 +347,6 @@ class Members extends CI_Controller {
 
     }
 
-
-/**
- * -----------------------------------------------------------------------------------
- * Test etc
- * -----------------------------------------------------------------------------------
- */
-    public function print_now() {
-        $this->load->model('Printer_model');
-        $printers = $this->Printer_model->list_printers();
-
-        print_r($printers);
-
-        $data['title'] = 'Print your documents now | Freeprint Authentication';
-        $data['content_data']['printers'] = $printers;
-
-        $this->load->view('layouts/default', $data);
-    }
-
-
 }
 
 /* End of file members.php */
