@@ -19,7 +19,7 @@
  *
  */
     $host = $_SERVER['HTTP_HOST'];
-    if (stripos($host, "freeprint.dev") === 0) {
+    if (stripos($host, "cloudprint.local") === 0) {
         define('ENVIRONMENT', 'development');
     } else {
         define('ENVIRONMENT', 'production');
@@ -38,7 +38,7 @@
         switch (ENVIRONMENT)
         {
             case 'development':
-                $env_dependent_path = '/home/dev/www';
+                $env_dependent_path = '/vagrant/application';
                 error_reporting(E_ALL);
             break;
 
