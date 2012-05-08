@@ -38,7 +38,7 @@
         switch (ENVIRONMENT)
         {
             case 'development':
-                $env_dependent_path = '/home/dev/www';
+                $env_dependent_path = '/vagrant/application';
                 error_reporting(E_ALL);
             break;
 
